@@ -78,7 +78,7 @@ resource "google_compute_instance" "gcp-slave-instance" {
 
 // 
 // metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync"
-  metadata_startup_script = file("k8s-mst-slv-vm-config.sh")
+  metadata_startup_script = file("k8s-slv-config.sh")
 
  network_interface {
    network = "default"
