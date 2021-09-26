@@ -61,7 +61,6 @@ output "instance_ip_addr" {
 }
 
 resource "google_compute_instance" "gcp-slave-instance" {
- // name         = "prografana-poc-vm-${random_id.instance_id.hex}"
  name = "k8s-slv-tf"
  machine_type = "e2-medium"
  zone         = "asia-south1-c"
@@ -75,21 +74,16 @@ resource "google_compute_instance" "gcp-slave-instance" {
       image = "ubuntu-1804-bionic-v20210720"
     }
   }
-
-// 
-// metadata_startup_script = "sudo apt-get update; sudo apt-get install -yq build-essential python-pip rsync"
   metadata_startup_script = file("k8s-slv-config.sh")
-
  network_interface {
    network = "default"
 
    access_config {
-     nat_ip = google_compute_address.static.address
+     //nat_ip = google_compute_address.static.address
      }
   }
   metadata = {
    ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
    enable-oslogin = "TRUE"
   }
-  
 }
