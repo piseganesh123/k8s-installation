@@ -79,7 +79,7 @@ resource "google_compute_instance" "gcp-slave-instance" {
    network = "default"
 
    access_config {
-     //nat_ip = google_compute_address.static.address
+     ////nat_ip = google_compute_address.static.address
      }
   }
   metadata = {
