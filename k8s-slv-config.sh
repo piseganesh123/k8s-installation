@@ -28,15 +28,3 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 echo " ======= Installed Docker ============"
 
-#create directory for kubeconfig
-#sudo mkdir /home/piseg432/.kube
-#sudo cp /home/piseg432/.config /home/piseg432/.kube/.config
-
-echo "============ updated kubeconfig ============="
-
-#curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.6.8 TARGET_ARCH=x86_64 sh -
-mkdir /home/piseg432/.kube
-
-mv /home/piseg432/.kubeconfig /home/piseg432/.kube/.config
-
-chmod 775 /home/piseg432/.kube*
