@@ -25,7 +25,7 @@ resource "google_compute_address" "static" {
 //  depends_on = [ google_compute_firewall.firewall ]
 }
 // A single Compute Engine instance
-resource "google_compute_instance" "gcp-instance" {
+resource "google_compute_instance" "k8s-mast-instance" {
  // name         = "prografana-poc-vm-${random_id.instance_id.hex}"
  name = "k8s-mst-tf"
  machine_type = "e2-medium"
@@ -40,7 +40,7 @@ resource "google_compute_instance" "gcp-instance" {
       image = "ubuntu-1804-bionic-v20210720"
     }
   }
-  metadata_startup_script = file("main-config-srv-vm.sh")
+  metadata_startup_script = file("k8s-mst-config.sh")
 
  network_interface {
    network = "default"
@@ -50,7 +50,7 @@ resource "google_compute_instance" "gcp-instance" {
        }
   }
   metadata = {
-   ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
+   ssh-keys = "piseg432_gmail_com:${file("~/.ssh/id_rsa.pub")}"
    enable-oslogin = "TRUE"
   }
   
@@ -60,8 +60,8 @@ output "instance_ip_addr" {
   value = "${google_compute_instance.gcp-instance.hostname}"
 }
 
-resource "google_compute_instance" "gcp-slave-instance" {
- name = "k8s-slv-tf"
+resource "google_compute_instance" "k8s-wrk-instance" {
+ name = "k8s-wrk-tf"
  machine_type = "e2-medium"
  zone         = "asia-south1-c"
  tags = ["not-needed"]
@@ -83,7 +83,7 @@ resource "google_compute_instance" "gcp-slave-instance" {
      }
   }
   metadata = {
-   ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
+   ssh-keys = "piseg432_gmail_com:${file("~/.ssh/id_rsa.pub")}"
    enable-oslogin = "TRUE"
   }
 }

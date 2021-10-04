@@ -28,7 +28,7 @@ sudo apt-get install curl
 
 sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
-sudo apt-get install kubeadm kubelet kubectl
+sudo apt-get install -y kubeadm kubelet kubectl
 
 sudo apt-mark hold kubeadm kubelet kubectl
 
@@ -43,4 +43,3 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 mkdir -p $HOME/.kube
 
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-
