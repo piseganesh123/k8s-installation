@@ -58,7 +58,7 @@ resource "google_compute_instance" "k8s-mast-instance" {
 }
 
 output "instance_ip_addr" {
-  value = "${google_compute_instance.gcp-instance.hostname}"
+  value = "${google_compute_instance.k8s-mast-instance.hostname}"
 }
 
 resource "google_compute_instance" "k8s-wrk-instance" {
