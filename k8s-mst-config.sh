@@ -1,6 +1,6 @@
-#install Kubectl
+#! /bin/bash
+
 echo " ======= Installing Docker ============"
-#curl -LO https://github.com/prometheus/prometheus/releases/download/v2.0.0/prometheus-2.0.0.linux-amd64.tar.gz
 
 #install docker
 
@@ -32,11 +32,9 @@ sudo apt-get install -y kubeadm kubelet kubectl
 
 sudo apt-mark hold kubeadm kubelet kubectl
 
-sudo swapoff –a
+#sudo swapoff –a
 
 sudo hostnamectl set-hostname master-node
-
-sudo hostnamectl set-hostname worker01
 
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 

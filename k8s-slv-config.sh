@@ -31,3 +31,4 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 echo " ======= Installed Docker ============"
 
+sudo hostnamectl set-hostname worker01
