@@ -30,7 +30,7 @@ resource "google_compute_instance" "k8s-mast-instance" {
  name = "k8s-mst-tf"
  machine_type = "e2-medium"
  zone         = "asia-south1-c"
- tags = ["not-needed"]
+ tags = ["allow-all-kube-ingress"]
   labels = {
     "purpose" = "poc"
     "preserve" = "no"
@@ -65,7 +65,7 @@ resource "google_compute_instance" "k8s-wrk-instance" {
  name = "k8s-wrk-tf"
  machine_type = "e2-medium"
  zone         = "asia-south1-c"
- tags = ["not-needed"]
+ tags = ["allow-all-kube-ingress"]
   labels = {
     "purpose" = "poc"
     "preserve" = "no"
