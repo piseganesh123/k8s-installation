@@ -89,3 +89,29 @@ resource "google_compute_instance" "k8s-wrk-instance" {
    ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
   }
 }
+
+module "firewall_rules" {
+  source       = "terraform-google-modules/network/google//modules/firewall-rules"
+  project_id   = var.project_id
+//  network_name = google_compute_network.default.name
+  network_name = "default"
+  rules = [{
+    name                    = "allow-mst-slv-ingress-kube"
+    description             = "accepts master to slave traffic"
+    direction               = "INGRESS"
+    priority                = null
+    ranges                  = ["0.0.0.0/0"]
+    source_tags             = null
+    source_service_accounts = null
+    target_tags             = ["allow-all-kube-ingress"]
+    target_service_accounts = null
+    allow = [{
+      protocol = "tcp"
+      ports    = ["all"]
+    }]
+    deny = []
+    log_config = {
+      metadata = "EXCLUDE_ALL_METADATA"
+    }
+  }]
+}
