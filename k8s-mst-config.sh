@@ -39,6 +39,17 @@ sudo apt-mark hold kubeadm kubelet kubectl
 
 sudo hostnamectl set-hostname master-node
 
+#create kubeadmin config file
+cat <<EOF > kubeadm-config.yaml
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+kubernetesVersion: v1.22.0
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: cgroupfs
+EOF
+
 sudo kubeadm init --config kubeadm-config.yaml
 
 mkdir -p $HOME/.kube

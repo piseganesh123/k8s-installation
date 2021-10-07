@@ -36,3 +36,19 @@ sudo hostnamectl set-hostname worker01
 cat <<EOF | sudo tee /etc/test.conf
 localhost
 EOF
+
+echo ======== Installing kube tools ============
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+
+sudo apt-get install curl
+
+sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+sudo swapoff -a
+
+sudo apt-get install -y kubeadm kubelet kubectl
+
+sudo apt-mark hold kubeadm kubelet kubectl
+
+sudo hostnamectl set-hostname worker-node
+
