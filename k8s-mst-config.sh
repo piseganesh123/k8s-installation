@@ -53,6 +53,13 @@ sudo sysctl net.bridge.bridge-nf-call-iptables=1
 
 sudo kubeadm init --config kubeadm-config.yaml
 
+sudo cp -i /kubeadm-config.yaml /home/piseg432/
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#export KUBECONFIG=/etc/kubernetes/admin.conf
+
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
 mkdir -p /home/piseg432/.kube
