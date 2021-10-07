@@ -90,3 +90,4 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 sudo kubectl apply -f busybox.yaml
 
+kubeadm token create --print-join-command
