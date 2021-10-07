@@ -49,13 +49,37 @@ kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
 cgroupDriver: cgroupfs
 EOF
+sudo sysctl net.bridge.bridge-nf-call-iptables=1
 
 sudo kubeadm init --config kubeadm-config.yaml
 
-mkdir -p $HOME/.kube
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+mkdir -p /home/piseg432/.kube
 
 sudo cp -i /etc/kubernetes/admin.conf /home/piseg432/.kube/config
 
 sudo chown piseg432 /home/piseg432/.kube/config
 
-sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+cat <<EOF > busybox.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox1
+  labels:
+    app: busybox1
+spec:
+  containers:
+  - image: busybox
+    command:
+      - sleep
+      - "3600"
+    imagePullPolicy: IfNotPresent
+    name: busybox
+  restartPolicy: Always
+EOF
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+sudo kubectl apply -f busybox.yaml
+
