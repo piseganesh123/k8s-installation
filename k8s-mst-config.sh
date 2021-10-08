@@ -18,8 +18,8 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-
+#sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+sudo apt-get install -y docker-ce=5:20.10.9~3-0~ubuntu-bionic docker-ce-cli=5:20.10.9~3-0~ubuntu-bionic containerd.io=1.4.11-1
 
 echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
 systemctl restart docker
@@ -35,7 +35,8 @@ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 sudo swapoff -a
 
-sudo apt-get install -y kubeadm kubelet kubectl
+#sudo apt-get install -y kubeadm kubelet kubectl
+sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
 
 sudo apt-mark hold kubeadm kubelet kubectl
 
@@ -44,16 +45,16 @@ sudo apt-mark hold kubeadm kubelet kubectl
 sudo hostnamectl set-hostname master-node
 
 #create kubeadmin config file
-cat <<EOF > kubeadm-config.yaml
-kind: ClusterConfiguration
-apiVersion: kubeadm.k8s.io/v1beta3
-kubernetesVersion: v1.22.0
----
-kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
-cgroupDriver: cgroupfs
-EOF
-sudo sysctl net.bridge.bridge-nf-call-iptables=1
+#cat <<EOF > kubeadm-config.yaml
+#kind: ClusterConfiguration
+#apiVersion: kubeadm.k8s.io/v1beta3
+#kubernetesVersion: v1.22.0
+#---
+#kind: KubeletConfiguration
+#apiVersion: kubelet.config.k8s.io/v1beta1
+#cgroupDriver: cgroupfs
+#EOF
+#sudo sysctl net.bridge.bridge-nf-call-iptables=1
 
 # ==== enable iptable entries
 
@@ -75,13 +76,13 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
-mkdir -p $HOME/.kube
+#mkdir -p $HOME/.kube
 
 [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
 
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-sudo chown $(id -u):$(id -g) $HOME/.kube/config
-export KUBECONFIG=/etc/kubernetes/admin.conf
+#sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#sudo chown $(id -u):$(id -g) $HOME/.kube/config
+#export KUBECONFIG=/etc/kubernetes/admin.conf
 
 #set user specific config
 mkdir -p /home/piseg432/.kube
@@ -93,7 +94,7 @@ sudo chown piseg432 /home/piseg432/.kube/config
 sudo su piseg432 -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
 # configure k8s to use master node
-cat <<EOF > busybox.yaml
+cat <<EOF > /home/piseg432/busybox.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -111,11 +112,12 @@ spec:
   restartPolicy: Always
 EOF
 
-sudo cp -i /busybox.yaml /home/piseg432/
+#sudo cp -i /busybox.yaml /home/piseg432/
 
-sudo su piseg432 -c "kubectl apply -f busybox.yaml"
+sudo su piseg432 -c "kubectl apply -f /home/piseg432/busybox.yaml"
 
 #references
 #kubeadm token create --print-join-command
 #kubectl get pods --all-namespaces
 #journalctl -xeu kubelet
+#alias lesssyslog="sudo less -g /var/log/syslog | grep startup-s" 
