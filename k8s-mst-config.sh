@@ -83,8 +83,6 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
-sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-
 #set user specific config
 mkdir -p /home/piseg432/.kube
 
@@ -92,10 +90,9 @@ sudo cp -i /etc/kubernetes/admin.conf /home/piseg432/.kube/config
 
 sudo chown piseg432 /home/piseg432/.kube/config
 
+sudo su piseg432 -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+
 # configure k8s to use master node
-sudo kubectl get pods --all-namespaces
-
-
 cat <<EOF > busybox.yaml
 apiVersion: v1
 kind: Pod
@@ -116,7 +113,7 @@ EOF
 
 sudo cp -i /busybox.yaml /home/piseg432/
 
-sudo kubectl apply -f busybox.yaml
+sudo su piseg432 -c "kubectl apply -f busybox.yaml"
 
 #references
 #kubeadm token create --print-join-command
