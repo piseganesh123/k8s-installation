@@ -69,11 +69,13 @@ EOF
 sudo sysctl --system
 #====================
 
-sudo cp -i /kubeadm-config.yaml /home/piseg432/
+#sudo cp -i /kubeadm-config.yaml /home/piseg432/
 echo 1 > /proc/sys/net/ipv4/ip_forward
 
 #sudo kubeadm init --config kubeadm-config.yaml --pod-network-cidr=10.244.0.0/16
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sleep 60
+# configure k8s to use master node
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
 #mkdir -p $HOME/.kube
@@ -93,8 +95,6 @@ sudo chown piseg432 /home/piseg432/.kube/config
 
 sudo su piseg432 -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
-sleep 60
-# configure k8s to use master node
 cat <<EOF > /home/piseg432/busybox.yaml
 apiVersion: v1
 kind: Pod
