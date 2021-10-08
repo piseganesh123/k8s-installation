@@ -20,6 +20,10 @@ echo \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
+
+echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
+systemctl restart docker
+
 echo " ======= Installing Kubernetes ============"
 # install Kubernetes
 
@@ -65,8 +69,13 @@ sudo sysctl --system
 #====================
 
 sudo cp -i /kubeadm-config.yaml /home/piseg432/
-sudo kubeadm init --config kubeadm-config.yaml
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+#sudo kubeadm init --config kubeadm-config.yaml --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 sleep 80
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
 mkdir -p $HOME/.kube
 
 [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
@@ -77,14 +86,14 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
+#set user specific config
 mkdir -p /home/piseg432/.kube
 
 sudo cp -i /etc/kubernetes/admin.conf /home/piseg432/.kube/config
 
 sudo chown piseg432 /home/piseg432/.kube/config
 
-kubectl taint nodes --all node-role.kubernetes.io/master-
-
+# configure k8s to use master node
 sudo kubectl get pods --all-namespaces
 
 
@@ -110,4 +119,7 @@ sudo cp -i /busybox.yaml /home/piseg432/
 
 sudo kubectl apply -f busybox.yaml
 
-kubeadm token create --print-join-command
+#references
+#kubeadm token create --print-join-command
+#kubectl get pods --all-namespaces
+#journalctl -xeu kubelet
