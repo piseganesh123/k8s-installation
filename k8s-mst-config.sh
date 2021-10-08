@@ -73,7 +73,6 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 #sudo kubeadm init --config kubeadm-config.yaml --pod-network-cidr=10.244.0.0/16
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-sleep 80
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
 mkdir -p $HOME/.kube
