@@ -93,6 +93,7 @@ sudo chown piseg432 /home/piseg432/.kube/config
 
 sudo su piseg432 -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
+sleep 60
 # configure k8s to use master node
 cat <<EOF > /home/piseg432/busybox.yaml
 apiVersion: v1
