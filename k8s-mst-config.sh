@@ -122,3 +122,6 @@ sudo su piseg432 -c "kubectl apply -f /home/piseg432/busybox.yaml"
 #kubectl get pods --all-namespaces
 #journalctl -xeu kubelet
 #alias lesssyslog="sudo less -g /var/log/syslog | grep startup-s" 
+#kubectl create secret docker-registry gcr-json-key --docker-server=eu.gcr.io --docker-username=_json_key --docker-password="$(cat ~/gcr_user.json)" --docker-email=piseganesh123@gmail.com
+#kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
+#

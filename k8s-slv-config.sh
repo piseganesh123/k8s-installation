@@ -27,7 +27,10 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+sudo apt-get install -y docker-ce=5:20.10.9~3-0~ubuntu-bionic docker-ce-cli=5:20.10.9~3-0~ubuntu-bionic containerd.io=1.4.11-1
+
+echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
+systemctl restart docker
 
 echo " ======= Installed Docker ============"
 
@@ -46,9 +49,8 @@ sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
 sudo swapoff -a
 
-sudo apt-get install -y kubeadm kubelet kubectl
+sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
 
 sudo apt-mark hold kubeadm kubelet kubectl
 
 sudo hostnamectl set-hostname worker-node
-
