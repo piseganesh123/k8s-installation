@@ -93,13 +93,13 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 mkdir -p $admin_user_dir/.kube
 
-sudo cp -i /etc/kubernetes/admin.conf $admin_user_dir/.kube/config
+yes | sudo cp -i /etc/kubernetes/admin.conf $admin_user_dir/.kube/config
 
 sudo chown $admin_user $admin_user_dir/.kube/config
 
 sudo su $admin_user -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
-cat <<EOF > "$admin_user"/busybox.yaml
+cat <<EOF > $admin_user_dir/busybox.yaml
 apiVersion: v1
 kind: Pod
 metadata:
