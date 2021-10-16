@@ -1,6 +1,6 @@
 #! /bin/bash
-ADMIN_USER=pgan432
-ADMIN_USER_DIR=/home/pgan432
+admin_user=pgan432
+admin_user_dir=/home/pgan432
 
 echo " ======= Installing Docker ============"
 
@@ -91,15 +91,15 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 #set user specific config
 #mkdir -p /home/piseg432/.kube
 
-mkdir -p $ADMIN_USER_DIR/.kube
+mkdir -p $admin_user_dir/.kube
 
-sudo cp -i /etc/kubernetes/admin.conf $ADMIN_USER_DIR/.kube/config
+sudo cp -i /etc/kubernetes/admin.conf $admin_user_dir/.kube/config
 
-sudo chown $ADMIN_USER $ADMIN_USER_DIR/.kube/config
+sudo chown $admin_user $admin_user_dir/.kube/config
 
-sudo su $ADMIN_USER -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+sudo su $admin_user -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
 
-cat <<EOF > "$ADMIN_USER_DIR"/busybox.yaml
+cat <<EOF > "$admin_user"/busybox.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -119,7 +119,7 @@ EOF
 
 #sudo cp -i /busybox.yaml /home/piseg432/
 
-sudo su $ADMIN_USER -c "kubectl apply -f "$ADMIN_USER_DIR"/busybox.yaml"
+sudo su $admin_user -c "kubectl apply -f "$admin_user_dir"/busybox.yaml"
 
 #references
 #kubeadm token create --print-join-command
