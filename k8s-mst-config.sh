@@ -88,15 +88,16 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 
 #set user specific config
 
-cd $admin_user_dir && mkdir -p .kube
+#cd $admin_user_dir && mkdir -p .kube
 
-yes | sudo cp -i /etc/kubernetes/admin.conf $admin_user_dir/.kube/config
+#yes | sudo cp -i /etc/kubernetes/admin.conf $admin_user_dir/.kube/config
 
-sudo chown $admin_user $admin_user_dir/.kube/config
+#sudo chown $admin_user $admin_user_dir/.kube/config
 
-sudo su $admin_user -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+#sudo su $admin_user -c "kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml"
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
-cat <<EOF > $admin_user_dir/busybox.yaml
+cat <<EOF > busybox.yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -116,11 +117,12 @@ EOF
 
 #sudo cp -i /busybox.yaml /home/piseg432/
 
-sudo su $admin_user -c "kubectl apply -f "$admin_user_dir"/busybox.yaml"
+#sudo su $admin_user -c "kubectl apply -f "$admin_user_dir"/busybox.yaml"
+kubectl apply -f "$admin_user_dir"/busybox.yaml
 
-cat <<EOF > "$admin_user_dir"/.bash_aliases
-alias lesssyslog='sudo less -g /var/log/syslog | grep startup-s' 
-EOF
+#cat <<EOF > .bash_aliases
+#alias lesssyslog='sudo less -g /var/log/syslog | grep startup-s' 
+#EOF
 
 #references
 #kubeadm token create --print-join-command
