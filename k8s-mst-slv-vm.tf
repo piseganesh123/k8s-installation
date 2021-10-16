@@ -10,7 +10,8 @@ variable "region" {
   default = "asia-south1"
 }
 provider "google" {
- credentials = file("/home/piseg432/keys/gce-creator.json")
+// credentials = file("/home/piseg432/keys/gce-creator.json")
+  credentials = file(var.key-location)
 // credentials =  $(GOOGLE_CLOUD_KEYFILE_JSON)
  //project     = "vast-pad-31912"
  project     = var.project_id
