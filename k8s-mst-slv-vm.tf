@@ -1,14 +1,6 @@
 // Create VM for Ansible client
 // Configure the Google Cloud provider
 
-variable "project_id" {
-  type = string
-  default = "vast-pad-319812"
-}
-variable "region" {
-  type = string
-  default = "asia-south1"
-}
 provider "google" {
 // credentials = file("/home/piseg432/keys/gce-creator.json")
   credentials = file(var.key-location)
@@ -88,7 +80,7 @@ resource "google_compute_instance" "k8s-wrk-instance" {
 //   ssh-keys = "piseg432_gmail_com:${file("~/.ssh/id_rsa.pub")}"
 //   enable-oslogin = "TRUE"
 //   ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
-     ssh-keys = var.os-user+":${file("~/.ssh/id_rsa.pub")}"
+     ssh-keys = "${file("~/.ssh/id_rsa.pub")}"
   }
 }
 
