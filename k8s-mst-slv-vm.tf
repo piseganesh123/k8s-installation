@@ -87,7 +87,8 @@ resource "google_compute_instance" "k8s-wrk-instance" {
   metadata = {
 //   ssh-keys = "piseg432_gmail_com:${file("~/.ssh/id_rsa.pub")}"
 //   enable-oslogin = "TRUE"
-   ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
+//   ssh-keys = "piseg432:${file("~/.ssh/id_rsa.pub")}"
+     ssh-keys = var.os-user+":${file("~/.ssh/id_rsa.pub")}"
   }
 }
 
