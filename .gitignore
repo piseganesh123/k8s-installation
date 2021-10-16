@@ -10,6 +10,8 @@
 # terraform files
 *.tfstate
 *.*backup*
+*.lock.hcl
+.terraform/*
 
 # Precompiled Headers
 *.gch
