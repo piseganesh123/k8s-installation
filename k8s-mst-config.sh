@@ -121,6 +121,10 @@ EOF
 
 sudo su $admin_user -c "kubectl apply -f "$admin_user_dir"/busybox.yaml"
 
+cat <<EOF > "$admin_user_dir".bash_aliases
+alias lesssyslog='sudo less -g /var/log/syslog | grep startup-s' 
+EOF
+
 #references
 #kubeadm token create --print-join-command
 #kubectl get pods --all-namespaces
