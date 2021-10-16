@@ -1,6 +1,6 @@
 #! /bin/bash
 admin_user=pgan432
-admin_user_dir=/home/pgan432
+admin_user_dir=/home/pgan432/
 
 echo " ======= Installing Docker ============"
 
@@ -80,8 +80,6 @@ sleep 60
 # configure k8s to use master node
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
-#mkdir -p $HOME/.kube
-
 [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
 
 #sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -89,9 +87,8 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 #export KUBECONFIG=/etc/kubernetes/admin.conf
 
 #set user specific config
-#mkdir -p /home/piseg432/.kube
 
-mkdir -p $admin_user_dir/.kube
+cd $admin_user_dir && mkdir -p .kube
 
 yes | sudo cp -i /etc/kubernetes/admin.conf $admin_user_dir/.kube/config
 
@@ -121,7 +118,7 @@ EOF
 
 sudo su $admin_user -c "kubectl apply -f "$admin_user_dir"/busybox.yaml"
 
-cat <<EOF > "$admin_user_dir".bash_aliases
+cat <<EOF > "$admin_user_dir"/.bash_aliases
 alias lesssyslog='sudo less -g /var/log/syslog | grep startup-s' 
 EOF
 
