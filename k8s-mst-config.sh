@@ -1,78 +1,65 @@
 #! /bin/bash
-set -e
+#set -e
 
 admin_user=pgan432
 admin_user_dir=/home/pgan432/
 
-usage() {
-  echo "=========== In usage function =========="
+install_k8s() {
+  echo "=========== In k8s function =========="
+  echo " ======= Installing Kubernetes ============"
+  # install Kubernetes
+  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+  sudo apt-get install curl
+  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+  sudo swapoff -a
+  #sudo apt-get install -y kubeadm kubelet kubectl
+  sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
+  sudo apt-mark hold kubeadm kubelet kubectl
+  #sudo swapoff –a
+  sudo hostnamectl set-hostname master-node
 }
  
-my_function() {
-  echo "=========== In my function =========="
+install_supp_tools() {
+  echo "=========== Tools installation =========="
+  sudo apt-get update
+  sudo apt-get install -y \
+      apt-transport-https \
+      ca-certificates \
+      curl \
+      gnupg \
+      lsb-release
+
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  echo \
+    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  sudo apt-get update
+  #sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+  sudo apt-get install -y docker-ce=5:20.10.9~3-0~ubuntu-bionic docker-ce-cli=5:20.10.9~3-0~ubuntu-bionic containerd.io=1.4.11-1
+
+  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
+  systemctl restart docker
 }
  
 main() {
   echo "=========== In main function =========="
-
+  install_supp_tools
+  install_k8s
  
-echo " ======= Installing Docker ============"
+  #create kubeadmin config file
+  #cat <<EOF > kubeadm-config.yaml
+  #kind: ClusterConfiguration
+  #apiVersion: kubeadm.k8s.io/v1beta3
+  #kubernetesVersion: v1.22.0
+  #---
+  #kind: KubeletConfiguration
+  #apiVersion: kubelet.config.k8s.io/v1beta1
+  #cgroupDriver: cgroupfs
+  #EOF
+  #sudo sysctl net.bridge.bridge-nf-call-iptables=1
 
-#install docker
-
- sudo apt-get update
- sudo apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt-get update
-#sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-sudo apt-get install -y docker-ce=5:20.10.9~3-0~ubuntu-bionic docker-ce-cli=5:20.10.9~3-0~ubuntu-bionic containerd.io=1.4.11-1
-
-echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
-systemctl restart docker
-
-echo " ======= Installing Kubernetes ============"
-# install Kubernetes
-
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
-
-sudo apt-get install curl
-
-sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-
-sudo swapoff -a
-
-#sudo apt-get install -y kubeadm kubelet kubectl
-sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
-
-sudo apt-mark hold kubeadm kubelet kubectl
-
-#sudo swapoff –a
-
-sudo hostnamectl set-hostname master-node
-
-#create kubeadmin config file
-#cat <<EOF > kubeadm-config.yaml
-#kind: ClusterConfiguration
-#apiVersion: kubeadm.k8s.io/v1beta3
-#kubernetesVersion: v1.22.0
-#---
-#kind: KubeletConfiguration
-#apiVersion: kubelet.config.k8s.io/v1beta1
-#cgroupDriver: cgroupfs
-#EOF
-#sudo sysctl net.bridge.bridge-nf-call-iptables=1
-
-# ==== enable iptable entries
+  # ==== enable iptable entries
 
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
@@ -90,7 +77,7 @@ echo 1 > /proc/sys/net/ipv4/ip_forward
 
 #sudo kubeadm init --config kubeadm-config.yaml --pod-network-cidr=10.244.0.0/16
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-sleep 60
+#sleep 60
 # configure k8s to use master node
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
