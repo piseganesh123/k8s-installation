@@ -4,50 +4,8 @@
 admin_user=pgan432
 admin_user_dir=/home/pgan432/
 
-install_k8s() {
-  echo "=========== In k8s function =========="
-  echo " ======= Installing Kubernetes ============"
-  # install Kubernetes
-  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
-  sudo apt-get install curl
-  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-  sudo swapoff -a
-  sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
-  sudo apt-mark hold kubeadm kubelet kubectl
-  sudo hostnamectl set-hostname master-node
-
-  sudo sysctl --system
-  #====================
-
-  echo 1 > /proc/sys/net/ipv4/ip_forward
-  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-  kubectl taint nodes --all node-role.kubernetes.io/master-
-
-}
- 
-install_supp_tools() {
-  echo "=========== Tools installation function =========="
-  sudo apt-get update
-  sudo apt-get install -y \
-      apt-transport-https \
-      ca-certificates \
-      curl \
-      gnupg \
-      lsb-release
-
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-  echo \
-    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-  sudo apt-get update
-  sudo apt-get install -y docker-ce=5:20.10.9~3-0~ubuntu-bionic docker-ce-cli=5:20.10.9~3-0~ubuntu-bionic containerd.io=1.4.11-1
-
-  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
-  systemctl restart docker
-}
-
 create_files() {
+echo "=========== in files creation function =========="
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
@@ -74,12 +32,60 @@ spec:
   restartPolicy: Always
 EOF
 } 
+
+install_k8s() {
+  echo "=========== In k8s inst function =========="
+  # install Kubernetes
+  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+  sudo apt-get install curl
+  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+  sudo swapoff -a
+  sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
+  sudo apt-mark hold kubeadm kubelet kubectl
+  sudo hostnamectl set-hostname master-node
+
+  sudo sysctl --system
+  #====================
+
+  echo 1 > /proc/sys/net/ipv4/ip_forward
+  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+  kubectl taint nodes --all node-role.kubernetes.io/master-
+}
+ 
+install_supp_tools() {
+  echo "=========== Tools installation function =========="
+  sudo apt-get update
+  sudo apt-get install -y \
+      apt-transport-https \
+      ca-certificates \
+      curl \
+      gnupg \
+      lsb-release
+
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  echo \
+    "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+  sudo apt-get update
+  sudo apt-get install -y docker-ce=5:20.10.9~3-0~ubuntu-bionic docker-ce-cli=5:20.10.9~3-0~ubuntu-bionic containerd.io=1.4.11-1
+
+  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
+  systemctl restart docker
+}
+
 deploy_network() {
+  echo "=========== in deploy n/w function =========="
+  #wait while users are getting created
+  ls admin_user_dir
+  [[ -d admin_user_dir ]] && echo "==== os-user is created ! ===="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
+  export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
  }
 
 deploy_busybox() {
+  echo "=========== in deploy busybox function =========="
  kubectl apply -f "$admin_user_dir"/busybox.yaml
 }
 main() {
@@ -95,7 +101,6 @@ main "$@"
 
 #sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 #sudo chown $(id -u):$(id -g) $HOME/.kube/config
-#export KUBECONFIG=/etc/kubernetes/admin.conf
 
 #set user specific config
 
