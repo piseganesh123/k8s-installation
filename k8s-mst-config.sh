@@ -1,7 +1,21 @@
 #! /bin/bash
+set -e
+
 admin_user=pgan432
 admin_user_dir=/home/pgan432/
 
+usage() {
+  echo "=========== In usage function =========="
+}
+ 
+my_function() {
+  echo "=========== In my function =========="
+}
+ 
+main() {
+  echo "=========== In main function =========="
+
+ 
 echo " ======= Installing Docker ============"
 
 #install docker
@@ -132,3 +146,6 @@ kubectl apply -f "$admin_user_dir"/busybox.yaml
 #kubectl create secret docker-registry gcr-json-key --docker-server=eu.gcr.io --docker-username=_json_key --docker-password="$(cat ~/gcr_user.json)" --docker-email=piseganesh123@gmail.com
 #kubectl patch serviceaccount default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
 #
+}
+
+main "$@"
