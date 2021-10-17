@@ -77,6 +77,7 @@ install_supp_tools() {
 deploy_network() {
   echo "=========== in deploy n/w function =========="
   #wait while users are getting created
+  sleep 80
   ls admin_user_dir
   [[ -d admin_user_dir ]] && echo "==== os-user is created ! ===="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
