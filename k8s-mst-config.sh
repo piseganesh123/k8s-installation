@@ -49,6 +49,9 @@ install_k8s() {
 
   echo 1 > /proc/sys/net/ipv4/ip_forward
   sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+  #wait while k8s comps are getting created
+  sleep 80
+  export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl taint nodes --all node-role.kubernetes.io/master-
 }
  
@@ -76,10 +79,8 @@ install_supp_tools() {
 
 deploy_network() {
   echo "=========== in deploy n/w function =========="
-  #wait while users are getting created
-  sleep 80
-  ls $(admin_user_dir)
-  [[ -d $(admin_user_dir) ]] && echo "==== os-user is created ! ===="
+   ls $admin_user_dir
+  [[ -d $admin_user_dir ]] && echo "==== os-user is created ! ===="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
