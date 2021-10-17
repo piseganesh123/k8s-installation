@@ -78,8 +78,8 @@ deploy_network() {
   echo "=========== in deploy n/w function =========="
   #wait while users are getting created
   sleep 80
-  ls admin_user_dir
-  [[ -d admin_user_dir ]] && echo "==== os-user is created ! ===="
+  ls $(admin_user_dir)
+  [[ -d $(admin_user_dir) ]] && echo "==== os-user is created ! ===="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
@@ -87,13 +87,16 @@ deploy_network() {
 
 deploy_busybox() {
   echo "=========== in deploy busybox function =========="
- kubectl apply -f "$admin_user_dir"/busybox.yaml
+ kubectl apply -f busybox.yaml
 }
 main() {
   echo "=========== In main function =========="
+  #install supporting tools like docker
   install_supp_tools
+  # create files like manifest
   create_files
   install_k8s
+  #deploy flannel n/w
   deploy_network
   deploy_busybox
 }
