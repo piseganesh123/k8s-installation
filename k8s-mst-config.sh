@@ -46,7 +46,7 @@ install_k8s() {
 
   echo 1 > /proc/sys/net/ipv4/ip_forward
   sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-  #wait while k8s comps are getting created & user gets created
+  #wait while k8s comps are getting created
   sleep 60
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl taint nodes --all node-role.kubernetes.io/master-
