@@ -1,9 +1,6 @@
 #! /bin/bash
 #set -e
 
-admin_user=pgan432
-admin_user_dir=/home/pgan432/
-
 create_files() {
 echo "=========== in files creation function =========="
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -79,8 +76,6 @@ install_supp_tools() {
 
 deploy_network() {
   echo "=========== in deploy n/w function =========="
-   ls $admin_user_dir
-  [[ -d $admin_user_dir ]] && echo "==== os-user is created ! ===="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
@@ -152,3 +147,7 @@ main "$@"
   #sudo apt-get install -y kubeadm kubelet kubectl
   #sudo swapoff –a
   #sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+  #   ls $admin_user_dir
+#  [[ -d $admin_user_dir ]] && echo "==== os-user is created ! ===="
+#admin_user=pgan432
+#admin_user_dir=/home/pgan432/
