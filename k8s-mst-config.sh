@@ -151,3 +151,6 @@ main "$@"
 #  [[ -d $admin_user_dir ]] && echo "==== os-user is created ! ===="
 #admin_user=pgan432
 #admin_user_dir=/home/pgan432/
+# mkdir -p $HOME/.kube
+# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+# sudo chown $(id -u):$(id -g) $HOME/.kube/config
