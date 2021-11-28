@@ -14,7 +14,7 @@ spec:
         app: guestbook-ui
     spec:
       containers:
-      - image: gcr.io/vast-pad-319812/javademoappwithcloudbuild:latest
+      - image: gcr.io/level-epoch-329208/javademoappwithcloudbuild:latest
         name: guestbook-ui
         ports:
         - containerPort: 80
