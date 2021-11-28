@@ -18,3 +18,5 @@ spec:
         name: guestbook-ui
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: gcr-key-1
