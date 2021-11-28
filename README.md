@@ -11,6 +11,4 @@ Steps:
 
 Create secret to pull image from gcr
 
-$kubectl create secret docker-registry test-image –docker-server=https://gcr.io –docker-username=_json_key –docker-email=gcr-user@level-epoch-329208.iam.gserviceaccount.com –docker-password=”$(cat /home/pgan432_gmail_com/gcr-user-level-epoch.json)”
-
-test (not checked)- kubectl create secret docker-registry my-secret --from-file=.dockerconfigjson=/home/pgan432_gmail_com/gcr-user-level-epoch.json
+$kubectl create secret docker-registry gcr-key-1 --docker-server=gcr.io --docker-username=_json_key --docker-password="$(cat /home/pgan432_gmail_com/gcr-user-level-epoch.json)" --docker-email=any@valid.email
