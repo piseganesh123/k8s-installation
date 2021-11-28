@@ -9,6 +9,15 @@ Steps:
 2. Update variables (variables.tf file) according to your GCP account
 3. run terraform init && terraform apply
 
+To connect to Kubernetes cluster
+  $mkdir -p $HOME/.kube
+  $sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  $sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+create service acccount having access to GCR and upload on new server
+
 Create secret to pull image from gcr
 
 $kubectl create secret docker-registry gcr-key-1 --docker-server=gcr.io --docker-username=_json_key --docker-password="$(cat /home/pgan432_gmail_com/gcr-user-level-epoch.json)" --docker-email=any@valid.email
+
+apply changes from deploy.yaml
