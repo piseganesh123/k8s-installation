@@ -24,6 +24,7 @@ apply changes from deploy.yaml
 
 =========== Worked node connects with master using below commands ============
 get secrete from kubeneretes 
-##
-kubeadm join 10.160.0.6:6443 --token <token>
+
+# Join master node
+kubeadm join 10.160.0.8:6443 --token <XXXXd1.5y2hj0yvvxzzXXXX> --discovery-token-ca-cert-hash <sha256:XXXX45908e73699e8fb8132f667adb7400a5bd151dd794947e3954e305XXXXXX>
   
