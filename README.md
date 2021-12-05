@@ -21,3 +21,9 @@ Create secret to pull image from gcr
 $kubectl create secret docker-registry gcr-key-1 --docker-server=gcr.io --docker-username=_json_key --docker-password="$(cat /home/pgan432_gmail_com/gcr-user-level-epoch.json)" --docker-email=any@valid.email
 
 apply changes from deploy.yaml
+
+=========== Worked node connects with master using below commands ============
+get secrete from kubeneretes 
+##
+kubeadm join 10.160.0.6:6443 --token <token>
+  
