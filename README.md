@@ -10,9 +10,12 @@ Steps:
 3. run terraform init && terraform apply
 
 To connect to Kubernetes cluster
-  $mkdir -p $HOME/.kube
-  $sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  $sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  "$mkdir -p $HOME/.kube"
+  
+  "$sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config"
+  
+  "$sudo chown $(id -u):$(id -g) $HOME/.kube/config"
 
 create service acccount having access to GCR and upload on new server
 
