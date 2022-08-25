@@ -6,8 +6,10 @@ Pre-Requisite
 
 Steps:
 1. clone repository
+2. Generate key with permission to create compute instances on GCP your account
 2. Update variables (variables.tf file) according to your GCP account
-3. run terraform init && terraform apply
+3. Create public and private key, update public key in "k8s-mst-slv-vm.tf" file
+4. run terraform init && terraform apply
 
 To connect to Kubernetes cluster
 
