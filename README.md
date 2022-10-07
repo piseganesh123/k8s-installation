@@ -1,7 +1,11 @@
 # kuber-inst-poc
 POC to install kubernetes on Ubuntu servers for demo purpose
 
+Validated on:
+OS - Ubuntu 20.04 LTS
+
 Pre-Requisite
+
 1. Ensure compute engine api is enabled before creating infrastructure
 
 Steps:
