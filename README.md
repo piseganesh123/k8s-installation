@@ -1,8 +1,9 @@
 # kuber-inst-poc
-POC to install kubernetes on Ubuntu servers for demo purpose
+Install kubernetes on Ubuntu servers for demo purpose
 
 Validated on:
 OS - Ubuntu 20.04 LTS
+Kubernetes version - 1.22
 
 Pre-Requisite
 
@@ -38,3 +39,9 @@ $kubeadm token create --print-join-command
 # Join master node
 $kubeadm join 10.160.0.8:6443 --token <XXXXd1.5y2hj0yvvxzzXXXX> --discovery-token-ca-cert-hash <sha256:XXXX45908e73699e8fb8132f667adb7400a5bd151dd794947e3954e305XXXXXX>
   
+
+FOLLOW BELOW STEPS - In case you are using vagrant
+#change user to root
+#clone repository
+$cd kuber-inst-poc
+$sh ./k8s-mst-config.sh
