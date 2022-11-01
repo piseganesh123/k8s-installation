@@ -32,8 +32,15 @@ $kubectl create secret docker-registry gcr-key-1 --docker-server=gcr.io --docker
 
 apply changes from deploy.yaml
 
-============ Open firewall ports =====
-sudo ufw allow 6443/tcp
+============ Open firewall ports on master =====
+
+$sudo ufw allow 6443/tcp
+$sudo ufw allow 2379:2380/tcp
+$sudo ufw allow 10250:10260/tcp
+
+#On worker node
+$sudo ufw allow 30000:32767/tcp
+$sudo ufw allow 10250/tcp
 
 =========== Worked node connects with master using below commands ============
 get secrete from kubeneretes 
