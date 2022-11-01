@@ -32,6 +32,9 @@ $kubectl create secret docker-registry gcr-key-1 --docker-server=gcr.io --docker
 
 apply changes from deploy.yaml
 
+============ Open firewall ports =====
+sudo ufw allow 6443/tcp
+
 =========== Worked node connects with master using below commands ============
 get secrete from kubeneretes 
 $kubeadm token create --print-join-command
