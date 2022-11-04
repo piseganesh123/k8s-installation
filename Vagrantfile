@@ -14,7 +14,7 @@ WORKER_NODES_COUNT  = 1
 
 Vagrant.configure(2) do |config|
 
-  #config.vm.provision "shell", path: "bootstrap.sh"
+  config.vm.provision "shell", path: "k8s-supp-tool-config.sh"
   
 
   # Kubernetes Master Server
@@ -39,7 +39,6 @@ Vagrant.configure(2) do |config|
       v.cpus    = CPUS_MASTER_NODE
     end
   
-  #  node.vm.provision "shell", path: "bootstrap_kmaster.sh"
     node.vm.provision "shell", path: "k8s-mst-config.sh"
   
   end
@@ -69,7 +68,6 @@ Vagrant.configure(2) do |config|
         v.cpus    = CPUS_WORKER_NODE
       end
 
-#      node.vm.provision "shell", path: "bootstrap_kworker.sh"
       node.vm.provision "shell", path: "k8s-slv-config.sh"
 
     end
