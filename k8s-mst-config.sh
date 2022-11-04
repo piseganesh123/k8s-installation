@@ -37,7 +37,7 @@ install_k8s() {
   sudo apt-get install curl
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
   sudo swapoff -a
-  sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
+  sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
   sudo apt-mark hold kubeadm kubelet kubectl
   sudo hostnamectl set-hostname master-node
 
@@ -45,7 +45,7 @@ install_k8s() {
   #====================
 
   echo 1 > /proc/sys/net/ipv4/ip_forward
-  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+  sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=10.244.0.0/16
   #wait while k8s comps are getting created
   sleep 60
   export KUBECONFIG=/etc/kubernetes/admin.conf

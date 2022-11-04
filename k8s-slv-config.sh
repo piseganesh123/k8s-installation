@@ -32,7 +32,7 @@ install_supp_tools() {
   sudo apt-get install curl
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
   sudo swapoff -a
-  sudo apt-get install -y kubeadm=1.22.2-00 kubelet=1.22.2-00 kubectl=1.22.2-00
+  sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
   sudo apt-mark hold kubeadm kubelet kubectl
   sudo hostnamectl set-hostname worker-node
 }
