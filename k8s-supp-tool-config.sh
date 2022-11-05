@@ -74,7 +74,7 @@ install_supp_tools() {
 
   sudo apt-get update
 #  sudo apt-get install -y containerd.io=1.4.11-1
-  sudo apt-get install -y containerd.io=1.5.9-0
+  sudo apt-get install -y containerd.io=1.6.9-1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
