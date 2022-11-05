@@ -73,7 +73,8 @@ install_supp_tools() {
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
   sudo apt-get update
-  sudo apt-get install -y containerd.io=1.4.11-1
+#  sudo apt-get install -y containerd.io=1.4.11-1
+  sudo apt-get install -y containerd.io=1.5.9-0
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
