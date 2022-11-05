@@ -34,7 +34,6 @@ install_k8s() {
   echo "=========== In k8s inst function =========="
   # install Kubernetes
   sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
-  sudo apt-mark hold kubeadm kubelet kubectl
   sudo hostnamectl set-hostname master-node
 
   sudo sysctl --system

@@ -33,11 +33,14 @@ EOF
 install_k8s_sup_tools() {
   echo "=========== In k8s inst function =========="
   # install Kubernetes
-  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
-  sudo apt-get install curl
+  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+  sudo apt-get install curl
   sudo swapoff -a
-  #sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
+  
+  sudo apt update
+  sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
   sudo apt-mark hold kubeadm kubelet kubectl
   sudo hostnamectl set-hostname master-node
 
