@@ -59,17 +59,25 @@ install_supp_tools() {
       apt-transport-https \
       ca-certificates \
       curl \
-      gnupg \
-      lsb-release
+      lsb-release \ 
+      gnupg2 \
+      software-properties-common
 
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-  
+ #configure container runtime      
+#  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+#  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
   sudo apt-get update
-  sudo apt-get install -y docker-ce=5:20.10.18~3-0~ubuntu-focal docker-ce-cli=5:20.10.18~3-0~ubuntu-focal containerd.io=1.4.11-1
+  sudo apt-get install -y containerd.io=1.4.11-1
 
-  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
-  systemctl restart docker
+  containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+  sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
+#  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
+   sudo systemctl restart containerd
+   sudo systemctl enable containerd
 }
 
 deploy_network() {

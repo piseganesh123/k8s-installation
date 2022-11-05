@@ -2,8 +2,9 @@
 Install kubernetes on Ubuntu servers for demo purpose
 
 Validated on:
-OS - Ubuntu 20.04 LTS
-Kubernetes version - 1.22
+OS - Ubuntu 22 LTS
+Kubernetes version - 1.24
+containerd version - 1.4.11-1
 
 Pre-Requisite
 
