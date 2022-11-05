@@ -1,53 +1,21 @@
 #! /bin/bash
 #set -e
 
-create_files() {
-echo "=========== in files creation function =========="
-cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-br_netfilter
-EOF
-
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-EOF
-cat <<EOF > busybox.yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: busybox1
-  labels:
-    app: busybox1
-spec:
-  containers:
-  - image: busybox
-    command:
-      - sleep
-      - "3600"
-    imagePullPolicy: IfNotPresent
-    name: busybox
-  restartPolicy: Always
-EOF
-} 
-
 install_k8s_sup_tools() {
   echo "=========== In k8s inst function =========="
   # install Kubernetes
   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-
-  sudo apt-get install curl
-  sudo swapoff -a
-  
+ 
   sudo apt update
+ 
   sudo apt-get install -y kubeadm=1.25.3-00 kubelet=1.25.3-00 kubectl=1.25.3-00
   sudo apt-mark hold kubeadm kubelet kubectl
   #sudo hostnamectl set-hostname master-node
 
-  sudo sysctl --system
   #====================
 
-  echo 1 > /proc/sys/net/ipv4/ip_forward
+
   #sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=10.244.0.0/16
   #wait while k8s comps are getting created
   #sleep 60
@@ -66,14 +34,34 @@ install_supp_tools() {
       gnupg2 \
       software-properties-common
 
- #configure container runtime      
+ #configure OS parameters for container runtime      
 #  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 #  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+  sudo swapoff -a
+  sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+  
+  sudo tee /etc/modules-load.d/containerd.conf <<EOF
+  overlay
+  br_netfilter
+  EOF
+  
+  sudo modprobe overlay
+  sudo modprobe br_netfilter
+
+  sudo tee /etc/sysctl.d/kubernetes.conf <<EOF
+  net.bridge.bridge-nf-call-ip6tables = 1
+  net.bridge.bridge-nf-call-iptables = 1
+  net.ipv4.ip_forward = 1
+  EOF 
+
+  sudo sysctl --system
+
+  #configure  container runtime 
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
   sudo apt-get update
-#  sudo apt-get install -y containerd.io=1.4.11-1
+
   sudo apt-get install -y containerd.io=1.6.9-1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
