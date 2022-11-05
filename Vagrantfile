@@ -39,7 +39,7 @@ Vagrant.configure(2) do |config|
       v.cpus    = CPUS_MASTER_NODE
     end
   
-    #node.vm.provision "shell", path: "k8s-mst-config.sh"
+    node.vm.provision "shell", path: "k8s-mst-config.sh"
   
   end
 

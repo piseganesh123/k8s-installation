@@ -36,13 +36,13 @@ install_k8s() {
  # sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
   sudo hostnamectl set-hostname master-node
 
-  sudo sysctl --system
+  #sudo sysctl --system
   #====================
 
   echo 1 > /proc/sys/net/ipv4/ip_forward
   sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=10.244.0.0/16
   #wait while k8s comps are getting created
-  sleep 60
+  #sleep 60
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl taint nodes --all node-role.kubernetes.io/master-
 }
