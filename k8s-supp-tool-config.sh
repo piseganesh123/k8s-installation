@@ -9,7 +9,7 @@ install_k8s_sup_tools() {
  
   sudo apt update
 
-  sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
+  sudo apt-get install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
 #  sudo apt-get install -y kubeadm=1.25.3-00 kubelet=1.25.3-00 kubectl=1.25.3-00
   sudo apt-mark hold kubeadm kubelet kubectl
   #sudo hostnamectl set-hostname master-node
