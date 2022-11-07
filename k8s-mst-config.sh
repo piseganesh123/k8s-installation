@@ -45,7 +45,7 @@ install_k8s() {
   #wait while k8s comps are getting created
   #sleep 60
   export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl taint nodes --all node-role.kubernetes.io/master-
+  kubectl taint nodes master-node key1=value1:NoSchedule
 }
  
 install_supp_tools() {
