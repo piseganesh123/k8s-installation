@@ -40,10 +40,9 @@ install_supp_tools() {
 join_k8s_cluster() {
   echo "Join node to Kubernetes Cluster"
   apt install -qq -y sshpass >/dev/null 2>&1
-  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster.example.com:/joincluster.sh /joincluster.sh 2>/dev/null
+  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no 172.16.16.100:/joincluster.sh /joincluster.sh 2>/dev/null
   bash /joincluster.sh
   # >/dev/null 2>&1
-
 }
 
 main() {
