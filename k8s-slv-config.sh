@@ -37,10 +37,19 @@ install_supp_tools() {
   sudo hostnamectl set-hostname worker-node
 }
 
+join_k8s_cluster() {
+  echo "Join node to Kubernetes Cluster"
+  apt install -qq -y sshpass >/dev/null 2>&1
+  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster.example.com:/joincluster.sh /joincluster.sh 2>/dev/null
+  bash /joincluster.sh >/dev/null 2>&1
+
+}
+
 main() {
   echo "=========== In main function =========="
   #install supporting tools like docker
-  install_supp_tools
+  #install_supp_tools
+  join_k8s_cluster
 }
 
 main "$@"

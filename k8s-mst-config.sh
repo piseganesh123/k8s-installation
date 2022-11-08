@@ -45,7 +45,9 @@ deploy_k8s_cluster() {
   #wait while k8s comps are getting created
   #sleep 60
   export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl taint nodes master-node key1=value1:NoSchedule
+  #kubectl taint nodes master-node key1=value1:NoSchedule
+  
+  kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
 }
  
 #install_supp_tools() {
@@ -81,6 +83,18 @@ deploy_busybox() {
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl apply -f busybox.yaml
 }
+
+enable_root_ssh_access(){
+  echo "Enable ssh password authentication"
+  sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+  echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+  systemctl reload sshd
+
+  echo "Set root password"
+  echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
+  echo "export TERM=xterm" >> /etc/bash.bashrc
+}
+
 main() {
   echo "=========== In main function =========="
   #install supporting tools like docker
@@ -90,6 +104,7 @@ main() {
   deploy_k8s_cluster
   #deploy flannel n/w
   deploy_network
+  enable_root_ssh_access
   #deploy_busybox
 }
 
