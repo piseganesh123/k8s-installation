@@ -68,7 +68,7 @@ Vagrant.configure(2) do |config|
         v.cpus    = CPUS_WORKER_NODE
       end
 
-      #node.vm.provision "shell", path: "k8s-slv-config.sh"
+      node.vm.provision "shell", path: "k8s-worker-config.sh"
 
     end
 
