@@ -2,15 +2,15 @@
 #set -e
 
 create_files() {
-echo "=========== in files creation function =========="
+echo "=========== in manifest files creation function =========="
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
 
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-EOF
+#cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+#net.bridge.bridge-nf-call-ip6tables = 1
+#net.bridge.bridge-nf-call-iptables = 1
+#EOF
 
 cat <<EOF > busybox.yaml
 apiVersion: v1
@@ -31,8 +31,8 @@ spec:
 EOF
 } 
 
-install_k8s() {
-  echo "=========== In k8s inst function =========="
+deploy_k8s_cluster() {
+  echo "=========== In k8s cluster deploy function =========="
   # install Kubernetes
  # sudo apt-get install -y kubeadm=1.24.0-00 kubelet=1.24.0-00 kubectl=1.24.0-00
   sudo hostnamectl set-hostname master-node
@@ -48,26 +48,26 @@ install_k8s() {
   kubectl taint nodes master-node key1=value1:NoSchedule
 }
  
-install_supp_tools() {
-  echo "=========== Tools installation function =========="
-  sudo apt-get update
-  sudo apt-get install -y \
-      apt-transport-https \
-      ca-certificates \
-      curl \
-      gnupg \
-      lsb-release
+#install_supp_tools() {
+#  echo "=========== Tools installation function =========="
+##  sudo apt-get update
+ # sudo apt-get install -y \
+ #     apt-transport-https \
+ #     ca-certificates \
+  #    curl \
+  #    gnupg \
+   #   lsb-release
 
 # containerd , docker installation
 #  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 #  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
   
-  sudo apt-get update
+  #sudo apt-get update
 #  sudo apt-get install -y docker-ce=5:20.10.18~3-0~ubuntu-focal docker-ce-cli=5:20.10.18~3-0~ubuntu-focal containerd.io=1.4.11-1
 
 #  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
 #  systemctl restart docker
-}
+#}
 
 deploy_network() {
   echo "=========== in deploy n/w function =========="
@@ -87,10 +87,10 @@ main() {
   #install_supp_tools
   # create files like manifest
   create_files
-  install_k8s
+  deploy_k8s_cluster
   #deploy flannel n/w
   deploy_network
-  deploy_busybox
+  #deploy_busybox
 }
 
 main "$@"

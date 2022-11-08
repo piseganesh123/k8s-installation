@@ -2,7 +2,7 @@
 #set -e
 
 install_k8s_sup_tools() {
-  echo "=========== In k8s inst function =========="
+  echo "=========== In k8s supporting tool inst function =========="
   # install Kubernetes
   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
@@ -25,14 +25,14 @@ install_k8s_sup_tools() {
 }
  
 install_supp_tools() {
-  echo "=========== Tools installation function =========="
+  echo "=========== Support Tools installation function =========="
   sudo apt-get update
   sudo apt-get install -y \
       apt-transport-https \
       ca-certificates \
       curl \
       lsb-release \ 
-      gnupg2 \
+      gnupg \
       software-properties-common
 
  #configure OS parameters for container runtime      
@@ -72,19 +72,19 @@ EOF
    sudo systemctl enable containerd
 }
 
-deploy_network() {
-  echo "=========== in deploy n/w function =========="
-  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
-  export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
- }
+#deploy_network() {
+#  echo "=========== in deploy n/w function =========="
+##  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
+ # export KUBECONFIG=/etc/kubernetes/admin.conf
+#  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# }
 
-deploy_busybox() {
-  echo "=========== in deploy busybox function =========="
- kubectl apply -f busybox.yaml
-}
+#deploy_busybox() {
+#  echo "=========== in deploy busybox function =========="
+# kubectl apply -f busybox.yaml
+#}
 main() {
-  echo "=========== In main function =========="
+  echo "=========== In main support tool install function =========="
   #install supporting tools like docker
   install_supp_tools
   # create files like manifest
