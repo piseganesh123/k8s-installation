@@ -78,7 +78,8 @@ deploy_network() {
 
 deploy_busybox() {
   echo "=========== in deploy busybox function =========="
- kubectl apply -f busybox.yaml
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+  kubectl apply -f busybox.yaml
 }
 main() {
   echo "=========== In main function =========="
