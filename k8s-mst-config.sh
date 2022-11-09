@@ -55,26 +55,26 @@ deploy_k8s_cluster() {
 }
  
 install_supp_tools() {
-#  echo "=========== Tools installation function =========="
-##  sudo apt-get update
- # sudo apt-get install -y \
- #     apt-transport-https \
- #     ca-certificates \
-  #    curl \
-  #    gnupg \
-   #   lsb-release
+  #  echo "=========== Tools installation function =========="
+  ##  sudo apt-get update
+  # sudo apt-get install -y \
+  #     apt-transport-https \
+  #     ca-certificates \
+    #    curl \
+    #    gnupg \
+    #   lsb-release
 
-# containerd , docker installation
-#  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-#  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-  
-  #sudo apt-get update
-#  sudo apt-get install -y docker-ce=5:20.10.18~3-0~ubuntu-focal docker-ce-cli=5:20.10.18~3-0~ubuntu-focal containerd.io=1.4.11-1
+  # containerd , docker installation
+  #  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  #  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+    
+    #sudo apt-get update
+  #  sudo apt-get install -y docker-ce=5:20.10.18~3-0~ubuntu-focal docker-ce-cli=5:20.10.18~3-0~ubuntu-focal containerd.io=1.4.11-1
 
-#  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
-#  systemctl restart docker
-#install helm
-snap install --channel=3.7 helm --classic
+  #  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
+  #  systemctl restart docker
+  #install helm
+  snap install --channel=3.7 helm --classic
 }
 
 deploy_network() {
@@ -104,7 +104,7 @@ enable_root_ssh_access(){
 main() {
   echo "=========== In main function =========="
   #install supporting tools like docker
-  #install_supp_tools
+  install_supp_tools
   # create files like manifest
   create_files
   deploy_k8s_cluster

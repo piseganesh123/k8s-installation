@@ -46,6 +46,7 @@ join_k8s_cluster() {
   echo "configure below environment variable to use kubectl from master server"
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
   # >/dev/null 2>&1
+  whoami
 }
 
 main() {
