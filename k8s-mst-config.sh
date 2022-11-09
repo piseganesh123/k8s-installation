@@ -41,6 +41,9 @@ deploy_k8s_cluster() {
   #====================
 
   echo 1 > /proc/sys/net/ipv4/ip_forward
+  
+  kubeadm config images pull >/dev/null 2>&1
+  
   sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=10.244.0.0/16
   #wait while k8s comps are getting created
   #sleep 60
@@ -48,9 +51,10 @@ deploy_k8s_cluster() {
   #kubectl taint nodes master-node key1=value1:NoSchedule
   
   kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
+ 
 }
  
-#install_supp_tools() {
+install_supp_tools() {
 #  echo "=========== Tools installation function =========="
 ##  sudo apt-get update
  # sudo apt-get install -y \
@@ -69,7 +73,9 @@ deploy_k8s_cluster() {
 
 #  echo '{"exec-opts": ["native.cgroupdriver=systemd"]}' >> /etc/docker/daemon.json
 #  systemctl restart docker
-#}
+#install helm
+snap install --channel=3.7 helm --classic
+}
 
 deploy_network() {
   echo "=========== in deploy n/w function =========="

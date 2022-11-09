@@ -52,9 +52,13 @@ net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 EOF
 
+  #disable firewall on host server
+  systemctl disable --now ufw >/dev/null 2>&1
+  
   sudo modprobe overlay
   sudo modprobe br_netfilter
   sudo sysctl --system
+
 
   #configure  container runtime 
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg

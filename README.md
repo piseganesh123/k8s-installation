@@ -5,6 +5,7 @@ Validated on:
 OS - Ubuntu 22 LTS
 Kubernetes version - 1.25.
 containerd version - 1.6.9-1
+helm 3.7
 
 Pre-Requisite
 
