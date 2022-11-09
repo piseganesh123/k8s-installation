@@ -42,6 +42,9 @@ join_k8s_cluster() {
   apt install -qq -y sshpass >/dev/null 2>&1
   sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no 172.16.16.100:/joincluster.sh /joincluster.sh 2>/dev/null
   bash /joincluster.sh
+
+  echo "configure below environment variable to use kubectl from master server"
+  echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
   # >/dev/null 2>&1
 }
 
