@@ -87,6 +87,15 @@ EOF
 #  echo "=========== in deploy busybox function =========="
 # kubectl apply -f busybox.yaml
 #}
+
+configure_hosts_file(){
+cat >>/etc/hosts<<EOF
+172.16.16.100   kmaster.example.com     kmaster
+172.16.16.101   kworker1.example.com    kworker1
+172.16.16.102   kworker2.example.com    kworker2
+EOF
+}
+
 main() {
   echo "=========== In main support tool install function =========="
   #install supporting tools like docker
@@ -94,6 +103,7 @@ main() {
   # create files like manifest
   #create_files
   install_k8s_sup_tools
+  configure_hosts_file
   #deploy flannel n/w
   #deploy_network
   #deploy_busybox
