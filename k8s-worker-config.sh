@@ -42,14 +42,14 @@ join_k8s_cluster() {
   apt install -qq -y sshpass >/dev/null 2>&1
   sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no 172.16.16.100:/joincluster.sh /joincluster.sh 2>/dev/null
   #bash /joincluster.sh
-
+  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no 172.16.16.100:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
   echo "configure below environment variable to use kubectl from master server"
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
   # >/dev/null 2>&1
   echo "for worker node validation purpose"
-  whoami
+  export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl get nodes
-  kubectl get pods
+
 }
 
 main() {
