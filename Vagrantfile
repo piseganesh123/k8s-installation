@@ -44,7 +44,6 @@ Vagrant.configure(2) do |config|
   
   end
 
-
   # Kubernetes Worker Nodes
   (1..WORKER_NODES_COUNT).each do |i|
 
