@@ -14,7 +14,7 @@ WORKER_NODES_COUNT  = 1
 
 Vagrant.configure(2) do |config|
 
-  config.vm.provision "shell", path: "k8s-supp-tool-config.sh"
+  config.vm.provision "shell", path: "k8s-bootstrap-tool-config.sh"
   
 
   # Kubernetes Master Server

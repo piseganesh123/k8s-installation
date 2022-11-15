@@ -2,8 +2,8 @@
 Install kubernetes on Ubuntu servers for demo purpose
 
 Validated on:
-OS - Ubuntu 22 LTS
-Kubernetes version - 1.25.
+OS - Ubuntu 22.04 LTS
+Kubernetes version - 1.25.0
 containerd version - 1.6.9-1
 helm 3.7
 

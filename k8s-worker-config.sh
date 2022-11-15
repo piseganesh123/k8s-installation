@@ -1,5 +1,5 @@
 install_supp_tools() {
-  #install Kubectl
+  #=== install Kubectl
   echo " ======= Installing tools on worker ============"
     sudo apt install -qq -y sshpass >/dev/null 2>&1
 
