@@ -37,7 +37,7 @@ deploy_k8s_cluster() {
   
   kubeadm config images pull >/dev/null 2>&1
   
-  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+  sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=10.244.0.0/16
   #wait while k8s comps are getting created
   sleep 60
   export KUBECONFIG=/etc/kubernetes/admin.conf
