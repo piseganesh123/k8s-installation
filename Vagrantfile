@@ -10,7 +10,9 @@ CPUS_WORKER_NODE    = 1
 MEMORY_MASTER_NODE  = 2048
 MEMORY_WORKER_NODE  = 1024
 WORKER_NODES_COUNT  = 1
-
+IP_NW = "172.16.16."
+MASTER_IP_START = 1
+NODE_IP_START = 2
 
 Vagrant.configure(2) do |config|
 
@@ -25,7 +27,7 @@ Vagrant.configure(2) do |config|
     node.vm.box_version       = VAGRANT_BOX_VERSION
     node.vm.hostname          = "kmaster.example.com"
 
-    node.vm.network "private_network", ip: "172.16.16.100"
+    node.vm.network "private_network", ip: 172.16.16.1"
 #    node.vm.network "public_network"
   
     node.vm.provider :virtualbox do |v|
@@ -40,7 +42,9 @@ Vagrant.configure(2) do |config|
       v.cpus    = CPUS_MASTER_NODE
     end
   
-    node.vm.provision "shell", path: "k8s-mst-config.sh"
+    node.vm.provision "shell", path: "k8s-mst-config.sh" do |s|
+      s.args = ["enp0s8"]
+    end
   
   end
 
@@ -69,7 +73,9 @@ Vagrant.configure(2) do |config|
         v.cpus    = CPUS_WORKER_NODE
       end
 
-      node.vm.provision "shell", path: "k8s-worker-config.sh"
+      node.vm.provision "shell", path: "k8s-worker-config.sh" do |s|
+        s.args = ["enp0s8"]
+      end
 
     end
 
