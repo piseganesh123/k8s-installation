@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
     node.vm.box_version       = VAGRANT_BOX_VERSION
     node.vm.hostname          = "kmaster.example.com"
 
-    node.vm.network "private_network", ip: "172.16.16.1"
+    node.vm.network "private_network", ip: "172.16.16.100"
 #    node.vm.network "public_network"
   
     node.vm.provider :virtualbox do |v|

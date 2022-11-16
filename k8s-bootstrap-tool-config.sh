@@ -39,9 +39,7 @@ net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 EOF
 
-  #disable firewall on host server
-  systemctl disable --now ufw >/dev/null 2>&1
-  
+
   sudo modprobe overlay
   sudo modprobe br_netfilter
   sudo sysctl --system
@@ -70,12 +68,18 @@ cat >>/etc/hosts<<EOF
 EOF
 }
 
+configure_firewall(){
+  echo "Stop and Disable firewall"
+  systemctl disable --now ufw >/dev/null 2>&1
+}
+
 main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
   install_supp_tools
   install_k8s_sup_tools
   configure_hosts_file
+  configure_firewall
 }
 
 main "$@"
