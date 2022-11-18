@@ -56,15 +56,15 @@ EOF
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
-   sudo systemctl restart containerd
-   sudo systemctl enable containerd
+  sudo systemctl restart containerd
+  sudo systemctl enable containerd
 }
 
 configure_hosts_file(){
 cat >>/etc/hosts<<EOF
-172.16.16.100   kmaster.example.com     kmaster
-172.16.16.101   kworker1.example.com    kworker1
-172.16.16.102   kworker2.example.com    kworker2
+172.16.16.100   kmaster     kmaster.local
+172.16.16.101   kworker1    kworker1
+172.16.16.101   kworker1    kworker1.local
 EOF
 }
 

@@ -15,17 +15,23 @@ join_k8s_cluster() {
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
   # for worker node validation purpose
   export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl get nodes
+  kubectl get nodes -o wide
 }
 
-condigure-worker(){
- sudo hostnamectl set-hostname worker1
+configure-worker(){
+ #sudo hostnamectl set-hostname worker1
+}
+
+configure_etc_hosts(){
+  # remove ubuntu-bionic entry
+  sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
 }
 
 main() {
   echo "=========== In main function =========="
   install_supp_tools
-  condigure-worker
+  configure-worker
+  configure_etc_hosts
   join_k8s_cluster
 }
 
