@@ -18,8 +18,9 @@ join_k8s_cluster() {
   kubectl get nodes -o wide
 }
 
-configure-worker(){
- #sudo hostnamectl set-hostname worker1
+configure_worker(){
+  #sudo hostnamectl set-hostname worker1
+  echo "nothing to configure as of now"
 }
 
 configure_etc_hosts(){
@@ -28,9 +29,9 @@ configure_etc_hosts(){
 }
 
 main() {
-  echo "=========== In main function =========="
+  echo "=========== In worker config main function =========="
   install_supp_tools
-  configure-worker
+  configure_worker
   configure_etc_hosts
   join_k8s_cluster
 }

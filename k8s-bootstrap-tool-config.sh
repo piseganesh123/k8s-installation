@@ -11,7 +11,6 @@ install_k8s_sup_tools() {
 
   sudo apt-get install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
   sudo apt-mark hold kubeadm kubelet kubectl
-
 }
  
 install_supp_tools() {
@@ -69,7 +68,7 @@ EOF
 }
 
 configure_firewall(){
-  echo "Stop and Disable firewall"
+  echo "==== Stop and Disable firewall =="
   systemctl disable --now ufw >/dev/null 2>&1
 }
 
