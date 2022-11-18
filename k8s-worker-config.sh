@@ -8,9 +8,9 @@ install_supp_tools() {
 join_k8s_cluster() {
   # Join node to Kubernetes Cluster
   echo "=========== joining k8s cluster =========="
-  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster.example.com:/joincluster.sh /joincluster.sh >/dev/null 2>&1
+  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/joincluster.sh /joincluster.sh
+  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
   bash /joincluster.sh
-  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster.example.com:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf >/dev/null 2>&1
   echo "configure below environment variable to use kubectl from master server"
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
   # for worker node validation purpose
