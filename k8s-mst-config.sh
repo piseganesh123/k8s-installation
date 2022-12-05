@@ -51,10 +51,11 @@ install_supp_tools() {
 }
 
 deploy_network() {
-  echo "=========== in deploy n/w function =========="
+  echo "=========== deploy Calico n/w =========="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  # OR flannel - ====# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
  }
 
 deploy_busybox() {
