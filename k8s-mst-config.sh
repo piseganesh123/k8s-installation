@@ -33,8 +33,6 @@ deploy_k8s_cluster() {
 
   #====================
 
-  echo 1 > /proc/sys/net/ipv4/ip_forward
-  
   kubeadm config images pull >/dev/null 2>&1
   
   sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=10.244.0.0/16
