@@ -16,7 +16,9 @@ deploy_network() {
   echo "=========== in deploy flannel n/w function =========="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  wget https://docs.projectcalico.org/manifests/calico.yaml
+  kubectl apply -f calico.yaml
  }
 
 configure_host(){

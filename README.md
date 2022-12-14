@@ -7,10 +7,10 @@ Kubernetes version - 1.25.0
 containerd version - 1.6.9-1
 helm 3.7
 vagrant - v2.3.4
-Virtualbox - 7.0.4
+Virtualbox - 6.1.4
+git - 2.39.0
 
 Pre-Requisite
-
 1. Ensure compute engine api is enabled before creating infrastructure
 
 Steps:
