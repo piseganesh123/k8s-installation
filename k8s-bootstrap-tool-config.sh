@@ -3,7 +3,7 @@
 
 install_utilites() {
   echo "=========== Supporting utility installation function =========="
-  sudo apt-get update
+  sudo apt-get update -y
   sudo apt-get install -y \
       apt-transport-https \
       ca-certificates \
@@ -30,7 +30,7 @@ install_k8s_supp_tools() {
   # ===  install Kubernetes
   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-  sudo apt-get update
+  sudo apt-get update -y
   sudo apt-get install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
   sudo apt-mark hold kubeadm kubelet kubectl
 }
