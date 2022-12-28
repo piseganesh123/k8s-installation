@@ -8,8 +8,9 @@ install_utilites() {
       apt-transport-https \
       ca-certificates \
       curl \
-      lsb-release \ 
-      software-properties-common
+      lsb-release 
+  #\ 
+  #?    software-properties-common
   #?  gnupg2 - is it required?
 
   # =========== configure  container runtime 

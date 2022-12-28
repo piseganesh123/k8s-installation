@@ -90,6 +90,14 @@ configure_user(){
   usermod -aG sudo student01
 
   echo "student01 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/student01
+
+  mkdir -p /home/student01/.kube
+  cp -i /etc/kubernetes/admin.conf /home/student01/.kube/config
+  chown student01:student01 /home/student01/.kube/config
+
+  source <(kubectl completion bash)
+  echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
+
 }
 
 main() {
@@ -99,11 +107,11 @@ main() {
   #=== create files like manifest
   create_files
   configure_host
-  configure_user
   deploy_k8s_cluster
   #== deploy flannel n/w
   deploy_network
   enable_root_ssh_access
+  configure_user
   # == deploy_busybox
 }
 
