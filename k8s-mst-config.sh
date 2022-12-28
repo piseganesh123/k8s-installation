@@ -88,6 +88,8 @@ configure_host(){
 configure_user(){
   adduser student01 --disabled-password -q
   usermod -aG sudo student01
+
+  echo "student01 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/student01
 }
 
 main() {
