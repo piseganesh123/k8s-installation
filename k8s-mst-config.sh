@@ -1,6 +1,9 @@
 #! /bin/bash
 #set -e
 
+ADV_ADDR="kmaster"
+POD_NW_CIDR="192.168.0.0/16"
+
 create_files() {
 echo "=========== in manifest files creation function =========="
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
@@ -35,7 +38,9 @@ deploy_k8s_cluster() {
 
   kubeadm config images pull >/dev/null 2>&1
   
-  sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
+#  sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
+  sudo kubeadm init --apiserver-advertise-address=${ADV-ADDR} --pod-network-cidr=${POD_NW_CIDR}
+
   #wait while k8s comps are getting created
   export KUBECONFIG=/etc/kubernetes/admin.conf
   #== to taint - run kubectl taint nodes master-node key1=value1:NoSchedule
