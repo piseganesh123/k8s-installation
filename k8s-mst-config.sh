@@ -48,6 +48,11 @@ install_supp_tools() {
   echo "=========== Tools installation function =========="
   #===== install helm
   snap install --channel=3.7 helm --classic
+
+  # ======= configuring autocompletion
+  sudo apt-get install bash-completion -y
+  source <(kubectl completion bash)
+  echo "source <(kubectl completion bash)" >> $HOME/.bashrc
 }
 
 deploy_network() {
