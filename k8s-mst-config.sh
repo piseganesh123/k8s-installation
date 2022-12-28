@@ -80,17 +80,24 @@ enable_root_ssh_access(){
   echo "export TERM=xterm" >> /etc/bash.bashrc
 }
 
-configure_etc_hosts(){
-  # remove ubuntu-bionic entry
+configure_host(){
+  # remove ubuntu-bionic entry from hosts file
   sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
 }
+
+configure_user(){
+  adduser student01 --disabled-password -q
+  usermod -aG sudo student01
+}
+
 main() {
   echo "=========== In main function =========="
   # == install supporting tools like docker
   install_supp_tools
   #=== create files like manifest
   create_files
-  configure_etc_hosts
+  configure_host
+  configure_user
   deploy_k8s_cluster
   #== deploy flannel n/w
   deploy_network
