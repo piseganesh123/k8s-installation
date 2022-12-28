@@ -1,7 +1,7 @@
 #! /bin/bash
 #set -e
 
-ADV_ADDR="kmaster"
+ADV_ADDR="172.16.16.100"
 POD_NW_CIDR="192.168.0.0/16"
 
 create_files() {
@@ -38,8 +38,8 @@ deploy_k8s_cluster() {
 
   kubeadm config images pull >/dev/null 2>&1
   
-#  sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
-  sudo kubeadm init --apiserver-advertise-address=${ADV-ADDR} --pod-network-cidr=${POD_NW_CIDR}
+#  TOBEDELETED - sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
+  sudo kubeadm init --apiserver-advertise-address=${ADV_ADDR} --pod-network-cidr=${POD_NW_CIDR}
 
   #wait while k8s comps are getting created
   export KUBECONFIG=/etc/kubernetes/admin.conf
@@ -56,7 +56,7 @@ install_supp_tools() {
 
   # ======= configuring autocompletion
   sudo apt-get install bash-completion -y
-  source <(kubectl completion bash)
+  #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> $HOME/.bashrc
 }
 
@@ -100,7 +100,7 @@ configure_user(){
   cp -i /etc/kubernetes/admin.conf /home/student01/.kube/config
   chown student01:student01 /home/student01/.kube/config
 
-  source <(kubectl completion bash)
+  #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
 
 }
