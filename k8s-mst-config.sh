@@ -6,6 +6,7 @@ POD_NW_CIDR="192.168.0.0/16"
 
 create_files() {
 echo "=========== in manifest files creation function =========="
+
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 br_netfilter
 EOF
@@ -46,7 +47,6 @@ deploy_k8s_cluster() {
   #== to taint - run kubectl taint nodes master-node key1=value1:NoSchedule
   
   kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
- 
 }
  
 install_supp_tools() {

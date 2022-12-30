@@ -1,7 +1,7 @@
 #! /bin/bash
 #set -e
 
-install_utilites() {
+install_k8s_supp_tools() {
   echo "=========== Supporting utility installation function =========="
   sudo apt-get update -y
   sudo apt-get install -y \
@@ -13,10 +13,17 @@ install_utilites() {
   #?    software-properties-common
   #?  gnupg2 - is it required?
 
-  # =========== configure  container runtime 
+  # =========== install  container runtime repo 
   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  sudo apt-get update
+ 
+  # ===  install Kubernetes repo
+  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+
+  sudo apt-get update -y
+  
+  #=== configure container runtime
   sudo apt-get install -y containerd.io=1.6.9-1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
@@ -26,12 +33,8 @@ install_utilites() {
   sudo systemctl enable containerd
 }
 
-install_k8s_supp_tools() {
-  echo "=========== In k8s supporting tool inst function =========="
-  # ===  install Kubernetes
-  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
-  sudo apt-get update -y
+configure_k8s_supp_tools() {
+  echo "=========== configure k8s tools =========="
   sudo apt-get install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
   sudo apt-mark hold kubeadm kubelet kubectl
 }
@@ -80,8 +83,8 @@ EOF
 main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
-  install_utilites
   install_k8s_supp_tools
+  configure_k8s_supp_tools
   configure_host
 }
 
