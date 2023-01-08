@@ -30,6 +30,16 @@ hard_reset_k8s()
 {
     kubeadm reset -f
 }
+
+configure_user(){
+  rm /home/student01/.kube/config
+  cp -i /etc/kubernetes/admin.conf /home/student01/.kube/config
+  chown student01:student01 /home/student01/.kube/config
+
+  #source <(kubectl completion bash)
+  echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
+}
+
 main() {
   echo "=========== In reset function =========="
   # == install supporting tools like docker
