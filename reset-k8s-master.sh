@@ -31,7 +31,7 @@ hard_reset_k8s()
     kubeadm reset -f
 }
 
-re-configure_user(){
+re_configure_user(){
   rm /home/student01/.kube/config
   cp -i /etc/kubernetes/admin.conf /home/student01/.kube/config
   chown student01:student01 /home/student01/.kube/config
@@ -48,7 +48,7 @@ main() {
   deploy_k8s_cluster
   #== deploy flannel n/w
   deploy_network
-  re-configure_user
+  re_configure_user
 }
 
 main "$@"
