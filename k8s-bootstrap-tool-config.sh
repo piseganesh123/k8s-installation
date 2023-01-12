@@ -35,7 +35,7 @@ install_k8s_supp_tools() {
 
 configure_k8s_supp_tools() {
   echo "=========== configure k8s tools =========="
-  sudo apt-get install -y kubeadm=1.25.1-00 kubelet=1.25.1-00 kubectl=1.25.1-00
+  sudo apt-get install -y kubeadm=1.26.0-00 kubelet=1.26.0-00 kubectl=1.26.0-00
   sudo apt-mark hold kubeadm kubelet kubectl
 }
 
