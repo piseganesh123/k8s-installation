@@ -4,6 +4,7 @@ configure_host(){
   echo 1 > /proc/sys/net/ipv4/ip_forward
   sudo swapoff -a
   sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+  echo "=== Reconfigured host"
 }
 hard_reset_k8s()
 {
@@ -21,13 +22,25 @@ join_k8s_cluster() {
   # for worker node validation purpose
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl get nodes -o wide
+  echo "==== Joined cluster ======="
 }
+
+re_configure_user(){
+  \cp /etc/kubernetes/admin.conf /home/student01/.kube/config
+  chown student01:student01 /home/student01/.kube/config
+
+  #source <(kubectl completion bash)
+  echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
+  echo "=== reconfigured student user ===="
+}
+
 main() {
   echo "=========== In reset function =========="
   # == install supporting tools like docker
   hard_reset_k8s
   configure_host
   join_k8s_cluster
+  re_configure_user
 }
 
 main "$@"

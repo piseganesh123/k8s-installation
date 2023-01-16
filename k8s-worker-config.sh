@@ -28,12 +28,28 @@ configure_etc_hosts(){
   sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
 }
 
+configure_user(){
+  adduser student01 --disabled-password -q
+  usermod -aG sudo student01
+
+  echo "student01 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/student01
+
+  mkdir -p /home/student01/.kube
+  cp -i /etc/kubernetes/admin.conf /home/student01/.kube/config
+  chown student01:student01 /home/student01/.kube/config
+
+  #source <(kubectl completion bash)
+  echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
+
+}
+
 main() {
   echo "=========== In worker config main function =========="
   install_supp_tools
   configure_worker
   configure_etc_hosts
   join_k8s_cluster
+  configure_user
 }
 
 main "$@"

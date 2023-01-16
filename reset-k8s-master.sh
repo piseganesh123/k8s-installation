@@ -10,21 +10,24 @@ deploy_k8s_cluster() {
   #===wait while k8s comps are getting created
   #== to taint - run $kubectl taint nodes master-node key1=value1:NoSchedule
   kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
+  echo "==== deployed k8s cluster ===="
 }
 
 deploy_network() {
   echo "=========== in deploy flannel n/w function =========="
-  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
+#  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
   #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   wget https://docs.projectcalico.org/manifests/calico.yaml
   kubectl apply -f calico.yaml
+  echo "=== deployed calico network ===="
  }
 
 configure_host(){
   echo 1 > /proc/sys/net/ipv4/ip_forward
   sudo swapoff -a
   sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+  echo "==== Configured host ======="
 }
 hard_reset_k8s()
 {
@@ -38,6 +41,7 @@ re_configure_user(){
 
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
+  echo "==== Reconfigured user student01"
 }
 
 main() {
