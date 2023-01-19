@@ -3,12 +3,12 @@
 
 install_k8s_supp_tools() {
   echo "=========== Supporting utility installation function =========="
-  sudo apt-get update -y
+  sudo apt-get update -y >/dev/null 2>&1
   sudo apt-get install -y \
       apt-transport-https \
       ca-certificates \
       curl \
-      lsb-release 
+      lsb-release >/dev/null 2>&1
   #\ 
   #?    software-properties-common
   #?  gnupg2 - is it required?
@@ -21,22 +21,24 @@ install_k8s_supp_tools() {
   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
   sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
-  sudo apt-get update -y
+  sudo apt-get update -y >/dev/null 2>&1
   
   #=== configure container runtime
-  sudo apt-get install -y containerd.io=1.6.9-1
+  sudo apt-get install -y containerd.io=1.6.9-1 >/dev/null 2>&1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
 
-  sudo systemctl restart containerd
-  sudo systemctl enable containerd
+  sudo systemctl restart containerd >/dev/null 2>&1
+  sudo systemctl enable containerd >/dev/null 2>&1
+  echo "=== Installed supporting tools === "
 }
 
 configure_k8s_supp_tools() {
   echo "=========== configure k8s tools =========="
-  sudo apt-get install -y kubeadm=1.26.0-00 kubelet=1.26.0-00 kubectl=1.26.0-00
+  sudo apt-get install -y kubeadm=1.26.0-00 kubelet=1.26.0-00 kubectl=1.26.0-00 >/dev/null 2>&1
   sudo apt-mark hold kubeadm kubelet kubectl
+  echo "==== Configured tools ===="
 }
 
 
@@ -60,7 +62,7 @@ EOF
 # ===== configure OS modules
   sudo modprobe overlay
   sudo modprobe br_netfilter
-  sudo sysctl --system
+  sudo sysctl --system >/dev/null 2>&1
 
 # ===== configure container runtime and kubernetes
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
@@ -77,6 +79,7 @@ EOF
 #===== enable ip forwarding
   echo 1 > /proc/sys/net/ipv4/ip_forward
 
+echo "==== Configured host === "
 }
 
 
@@ -86,6 +89,7 @@ main() {
   install_k8s_supp_tools
   configure_k8s_supp_tools
   configure_host
+  echo "=== done with k8s installation ==="
 }
 
 main "$@"

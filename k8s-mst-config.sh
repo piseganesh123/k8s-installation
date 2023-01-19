@@ -40,24 +40,26 @@ deploy_k8s_cluster() {
   kubeadm config images pull >/dev/null 2>&1
   
 #  TOBEDELETED - sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
-  sudo kubeadm init --apiserver-advertise-address=${ADV_ADDR} --pod-network-cidr=${POD_NW_CIDR}
+  sudo kubeadm init --apiserver-advertise-address=${ADV_ADDR} --pod-network-cidr=${POD_NW_CIDR} >/dev/null 2>&1
 
   #wait while k8s comps are getting created
   export KUBECONFIG=/etc/kubernetes/admin.conf
   #== to taint - run kubectl taint nodes master-node key1=value1:NoSchedule
   
   kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
+  echo "=== deployed cluster on master node ===="
 }
  
 install_supp_tools() {
   echo "=========== Tools installation function =========="
   #===== install helm
-  snap install --channel=3.7 helm --classic
+  snap install --channel=3.7 helm --classic >/dev/null 2>&1
 
   # ======= configuring autocompletion
   sudo apt-get install bash-completion -y
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> $HOME/.bashrc
+  echo "=== Installed supporting tools on master node ==="
 }
 
 deploy_network() {
@@ -66,6 +68,7 @@ deploy_network() {
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
   # OR flannel - ====# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  echo "=== deployed nw ==="
  }
 
 deploy_busybox() {
@@ -78,16 +81,18 @@ enable_root_ssh_access(){
   echo "=== Enable ssh password authentication"
   sed -i 's/^PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
-  systemctl reload sshd
+  systemctl reload sshd >/dev/null 2>&1
 
   echo "Set root password"
   echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
   echo "export TERM=xterm" >> /etc/bash.bashrc
+  echo "=== enabled root access ==="
 }
 
 configure_host(){
   # remove ubuntu-bionic entry from hosts file
   sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
+  echo "=== Configured host ===="
 }
 
 configure_user(){
@@ -102,7 +107,7 @@ configure_user(){
 
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
-
+  echo "=== configured student01 user"
 }
 
 main() {
@@ -118,6 +123,7 @@ main() {
   enable_root_ssh_access
   configure_user
   # == deploy_busybox
+  echo "=== done with master node configuration"
 }
 
 main "$@"
