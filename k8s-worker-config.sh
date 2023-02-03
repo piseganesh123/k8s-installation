@@ -24,7 +24,7 @@ configure_worker(){
 }
 
 configure_etc_hosts(){
-  # remove ubuntu-bionic entry
+  # remove ubuntu-bionic entry from hosts file
   sudo sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
   echo "=== Configured host file on worker ==="
 }

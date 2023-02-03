@@ -42,7 +42,7 @@ deploy_k8s_cluster() {
   
 #  TOBEDELETED - sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
   sudo kubeadm init --apiserver-advertise-address=${ADV_ADDR} --pod-network-cidr=${POD_NW_CIDR} \
-  --control-plane-endpoint=${CP_ENDPOINT} >/dev/null 2>&1
+  --control-plane-endpoint=${CP_ENDPOINT}
 
   #wait while k8s comps are getting created
   export KUBECONFIG=/etc/kubernetes/admin.conf
