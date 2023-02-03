@@ -59,3 +59,14 @@ FOLLOW BELOW STEPS - In case you are using vagrant
 #clone repository
 $cd kuber-inst-poc
 $sh ./k8s-mst-config.sh
+
+high level steps
+Install supporting tools and utilities
+
+install & configure container runtime
+
+install kubectl, kubeadm, kubelet
+
+configure host server
+
+create cluster using kubeadm
