@@ -70,3 +70,6 @@ install kubectl, kubeadm, kubelet
 configure host server
 
 create cluster using kubeadm
+
+#Next actions
+  need openssl, bash as shell, alias like k, now, do
