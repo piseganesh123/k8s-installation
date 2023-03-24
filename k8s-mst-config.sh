@@ -58,7 +58,7 @@ install_supp_tools() {
   snap install --channel=3.7 helm --classic >/dev/null 2>&1
 
   # ======= configuring autocompletion
-  sudo apt-get install bash-completion -y
+  sudo apt-get install openssl, bash-completion -y
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> $HOME/.bashrc
   echo "=== Installed supporting tools on master node ==="
@@ -105,7 +105,7 @@ configure_user(){
 
   mkdir -p /home/student01/.kube
   cp -i /etc/kubernetes/admin.conf /home/student01/.kube/config
-  chown student01:student01 /home/student01/.kube/config
+  chown -R student01:student01 /home/student01/.kube
 
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
