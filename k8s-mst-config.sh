@@ -58,7 +58,7 @@ install_supp_tools() {
   snap install --channel=3.7 helm --classic >/dev/null 2>&1
 
   # ======= configuring autocompletion
-  sudo apt-get install openssl, bash-completion -y
+  sudo apt-get install openssl, jq, bash-completion -y
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> $HOME/.bashrc
   echo "=== Installed supporting tools on master node ==="
@@ -112,6 +112,8 @@ configure_user(){
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
   echo "=== configured student01 user"
+  #add alias
+  alias kn='kubectl config set-context --current --namespace ' >> /home/student01/.bash_aliases
 }
 
 main() {
