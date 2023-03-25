@@ -68,7 +68,9 @@ deploy_network() {
   echo "=========== deploy Calico n/w =========="
   [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
   export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  # configure calico - CRD and plugin
+  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
+  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml
   # OR flannel - ====# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   echo "=== deployed nw ==="
  }
