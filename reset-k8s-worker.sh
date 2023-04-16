@@ -26,7 +26,7 @@ join_k8s_cluster() {
 }
 
 re_configure_user(){
-  \cp /etc/kubernetes/admin.conf /home/student01/.kube/config
+  cp /etc/kubernetes/admin.conf /home/student01/.kube/config
   chown student01:student01 /home/student01/.kube/config
 
   #source <(kubectl completion bash)
