@@ -55,12 +55,12 @@ deploy_k8s_cluster() {
 install_supp_tools() {
   echo "=========== Tools installation function =========="
   #===== install helm
-  snap install --channel=3.7 helm --classic >/dev/null 2>&1
+  #snap install --channel=3.7 helm --classic >/dev/null 2>&1
 
   # ======= configuring autocompletion
   sudo apt-get install openssl, jq, bash-completion -y
   #source <(kubectl completion bash)
-  echo "source <(kubectl completion bash)" >> $HOME/.bashrc
+  #echo "source <(kubectl completion bash)" >> $HOME/.bashrc
   echo "=== Installed supporting tools on master node ==="
 }
 
