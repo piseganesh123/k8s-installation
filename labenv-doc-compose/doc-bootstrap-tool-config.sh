@@ -31,11 +31,6 @@ install_docker_supp_tools() {
   echo "=== Installed supporting tools === "
 }
 
-install_docker_comp()
-{
-
-}
-
 configure_host()
 {
 # === configure_hosts_file
@@ -75,7 +70,6 @@ main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
   install_docker_supp_tools
-  install_docker_comp
   configure_host
   echo "=== done with k8s installation ==="
 }
