@@ -21,6 +21,7 @@ install_docker_supp_tools() {
   
   #=== configure container runtime
   sudo apt-get install -y containerd.io=1.6.9-1 >/dev/null 2>&1
+ # sudo apt-get install -y docker-ce docker-ce-cli docker-buildx  docker-compose >/dev/null 2>&1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
@@ -28,6 +29,11 @@ install_docker_supp_tools() {
   sudo systemctl restart containerd >/dev/null 2>&1
   sudo systemctl enable containerd >/dev/null 2>&1
   echo "=== Installed supporting tools === "
+}
+
+install_docker_comp()
+{
+
 }
 
 configure_host()
@@ -69,6 +75,7 @@ main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
   install_docker_supp_tools
+  install_docker_comp
   configure_host
   echo "=== done with k8s installation ==="
 }
