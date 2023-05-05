@@ -21,7 +21,7 @@ install_docker_supp_tools() {
   
   #=== configure container runtime
   sudo apt-get install -y containerd.io=1.6.9-1 >/dev/null 2>&1
- # sudo apt-get install -y docker-ce docker-ce-cli docker-buildx  docker-compose >/dev/null 2>&1
+  sudo apt-get install -y docker-ce=5:23.0.4-1~ubuntu.22.04~jammy docker-compose=1.29.2-1 >/dev/null 2>&1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
