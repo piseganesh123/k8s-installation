@@ -65,13 +65,19 @@ EOF
 echo "==== Configured host === "
 }
 
+configure_user()
+{
+  sudo usermod -aG docker vagrant
+  echo "=== configured vagrant user ===="
+}
 
 main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
   install_docker_supp_tools
   configure_host
-  echo "=== done with k8s installation ==="
+  configure_user
+  echo "=== done with docker, docker-compose installation ==="
 }
 
 main "$@"
