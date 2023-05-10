@@ -20,7 +20,7 @@ join_k8s_cluster() {
 
 disable_master_deploy()
 {
-  kubectl taint nodes kmaster node-role.kubernetes.io/control-plane
+  kubectl taint nodes kmaster node-role.kubernetes.io/control-plane:NoSchedule
   echo "=== workload can be deployed on Master node now  ==="
 }
 configure_worker(){
