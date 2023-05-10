@@ -75,6 +75,12 @@ deploy_network() {
   echo "=== deployed nw ==="
  }
 
+enable_master_deploy()
+{
+  kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+  echo "=== workload can be deployed on Master node now  ==="
+}
+
 deploy_busybox() {
   echo "=========== in deploy busybox function =========="
   export KUBECONFIG=/etc/kubernetes/admin.conf
@@ -126,6 +132,7 @@ main() {
   deploy_k8s_cluster
   #== deploy flannel n/w
   deploy_network
+  enable_master_deploy
   enable_root_ssh_access
   configure_user
   # == deploy_busybox

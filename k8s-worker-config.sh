@@ -18,6 +18,11 @@ join_k8s_cluster() {
   kubectl get nodes -o wide
 }
 
+disable_master_deploy()
+{
+  kubectl taint nodes kmaster node-role.kubernetes.io/control-plane
+  echo "=== workload can be deployed on Master node now  ==="
+}
 configure_worker(){
   #sudo hostnamectl set-hostname worker1
   echo "no tool to configure on worker node as of now"
@@ -50,6 +55,7 @@ main() {
   configure_worker
   configure_etc_hosts
   join_k8s_cluster
+  disable_master_deploy
   configure_user
   echo "=== done with k8s worker node configuration === "
 }
