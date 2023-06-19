@@ -36,14 +36,8 @@ resource "google_compute_instance" "default" {
     provisioning_model = "SPOT"
     automatic_restart = "false"
   }
-  metadata_startup_script = <<-EOF
-    sudo apt install git -y \
-    git clone https://github.com/piseganesh123/k8s-installation.git \
-    cd k8s-installation/k8s-on-gcp-vm \
-    sudo sh ./k8s-bootstrap-tool-config.sh \
-    sudo sh ./k8s-mst-config.sh
-  EOF
-  
+  metadata_startup_script = "sudo apt install git -y && git clone https://github.com/piseganesh123/k8s-installation.git && cd k8s-installation/k8s-on-gcp-vm && sudo sh ./k8s-bootstrap-tool-config.sh && sudo sh ./k8s-mst-config.sh"
+     
   service_account {
     # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = google_service_account.default.email
