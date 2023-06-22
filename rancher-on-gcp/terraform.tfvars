@@ -1,12 +1,12 @@
 
 # File path and name of service account access token file.
-gcp_account_json = "/home/piseganesh123/key/agpise123_tf_training.json"
+gcp_account_json = "/home/piseganesh123/key/<projname_keyname>.json"
 
 # GCP project in which the quickstart will be deployed.
 gcp_project = "strange-victory-390308"
 
 # Admin password to use for Rancher server bootstrap, min. 12 characters
-rancher_server_admin_password = "rancherpass12345"
+rancher_server_admin_password = "<password>"
 
 # Version of cert-manager to install alongside Rancher (format: 0.0.0)
 cert_manager_version = "1.11.0"
