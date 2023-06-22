@@ -4,7 +4,7 @@ resource "google_service_account" "default" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = "test"
+  name         = "demo-vm-spot"
   machine_type = "e2-medium"
   zone         = "asia-south1-c"
 
@@ -14,7 +14,7 @@ resource "google_compute_instance" "default" {
     initialize_params {
       image = "ubuntu-2204-jammy-v20230616"
       labels = {
-        my_label = "value"
+        my_label = "demo-label"
       }
     }
   }
@@ -36,6 +36,7 @@ resource "google_compute_instance" "default" {
     provisioning_model = "SPOT"
     automatic_restart = "false"
   }
+  
   metadata_startup_script = "sudo apt install git -y && git clone https://github.com/piseganesh123/k8s-installation.git && cd k8s-installation/k8s-on-gcp-vm && sudo sh ./k8s-bootstrap-tool-config.sh && sudo sh ./k8s-mst-config.sh"
      
   service_account {
