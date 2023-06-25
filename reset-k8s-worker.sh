@@ -15,7 +15,7 @@ join_k8s_cluster() {
   # Join node to Kubernetes Cluster
   echo "=========== joining k8s cluster =========="
 #  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/joincluster.sh /joincluster.sh
-  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
+  sudo sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
   sudo bash /joincluster.sh
@@ -29,7 +29,7 @@ join_k8s_cluster() {
 
 re_configure_user(){
   sudo cp /etc/kubernetes/admin.conf /home/student01/.kube/config
-  chown student01:student01 /home/student01/.kube/config
+  sudo chown student01:student01 /home/student01/.kube/config
 
   #source <(kubectl completion bash)
   echo "source <(kubectl completion bash)" >> /home/student01/.bashrc
