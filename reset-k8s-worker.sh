@@ -8,7 +8,7 @@ configure_host(){
 }
 hard_reset_k8s()
 {
-    kubeadm reset -f
+    sudo kubeadm reset -f
 }
 
 join_k8s_cluster() {
@@ -18,7 +18,7 @@ join_k8s_cluster() {
   sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
   export KUBECONFIG=/etc/kubernetes/admin.conf
   kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
-  bash /joincluster.sh
+  sudo bash /joincluster.sh
   # for worker node validation purpose
   echo "configure below environment variable to use kubectl from master server"
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
@@ -28,7 +28,7 @@ join_k8s_cluster() {
 }
 
 re_configure_user(){
-  cp /etc/kubernetes/admin.conf /home/student01/.kube/config
+  sudo cp /etc/kubernetes/admin.conf /home/student01/.kube/config
   chown student01:student01 /home/student01/.kube/config
 
   #source <(kubectl completion bash)
@@ -40,7 +40,7 @@ main() {
   echo "=========== In reset function =========="
   # == install supporting tools like docker
   hard_reset_k8s
-  configure_host
+  configure_host 
   join_k8s_cluster
   re_configure_user
 }
