@@ -14,13 +14,15 @@ hard_reset_k8s()
 join_k8s_cluster() {
   # Join node to Kubernetes Cluster
   echo "=========== joining k8s cluster =========="
-  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/joincluster.sh /joincluster.sh
+#  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/joincluster.sh /joincluster.sh
   sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+  kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
   bash /joincluster.sh
+  # for worker node validation purpose
   echo "configure below environment variable to use kubectl from master server"
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
-  # for worker node validation purpose
-  export KUBECONFIG=/etc/kubernetes/admin.conf
+
   kubectl get nodes -o wide
   echo "==== Joined cluster ======="
 }
