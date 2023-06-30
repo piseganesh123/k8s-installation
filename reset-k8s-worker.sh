@@ -16,9 +16,9 @@ join_k8s_cluster() {
   echo "=========== joining k8s cluster =========="
 #  sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/joincluster.sh /joincluster.sh
   sudo sshpass -p "kubeadmin" scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no kmaster:/etc/kubernetes/admin.conf  /etc/kubernetes/admin.conf
-  export KUBECONFIG=/etc/kubernetes/admin.conf
-  kubeadm token create --print-join-command > /joincluster.sh 2>/dev/null
-  sudo bash /joincluster.sh
+  sudo export KUBECONFIG=/etc/kubernetes/admin.conf
+  sudo kubeadm token create --print-join-command > ./joincluster.sh 2>/dev/null
+  sudo bash ./joincluster.sh
   # for worker node validation purpose
   echo "configure below environment variable to use kubectl from master server"
   echo "export KUBECONFIG=/etc/kubernetes/admin.conf"
