@@ -21,7 +21,7 @@ end
 
 Vagrant.configure(2) do |config|
 # To limit disksize
-  config.disksize.size = '15GB'
+  config.disksize.size = '20GB'
   config.vm.provision "shell", path: "k8s-bootstrap-tool-config.sh"
   
 
