@@ -14,8 +14,14 @@ IP_NW = "172.16.16."
 MASTER_IP_START = 1
 NODE_IP_START = 2
 
-Vagrant.configure(2) do |config|
+# Install vagrant-disksize to allow resizing the vagrant box disk.
+unless Vagrant.has_plugin?("vagrant-disksize")
+  raise  Vagrant::Errors::VagrantError.new, "vagrant-disksize plugin is missing. Please install it using 'vagrant plugin install vagrant-disksize' and rerun 'vagrant up'"
+end
 
+Vagrant.configure(2) do |config|
+# To limit disksize
+  config.disksize.size = '15GB'
   config.vm.provision "shell", path: "k8s-bootstrap-tool-config.sh"
   
 
