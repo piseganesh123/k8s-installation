@@ -6,7 +6,7 @@ install_docker_supp_tools() {
   sudo apt-get update -y >/dev/null 2>&1
   
   #=== configure container runtime
-  echo "=== Installed supporting tools === "
+  echo "=== updated supporting tools === "
 }
 
 configure_host()
@@ -17,13 +17,13 @@ cat >>/etc/hosts<<EOF
 EOF
 
 #=== configure_firewall
-  echo "==== Stop and Disable firewall =="
-  systemctl disable --now ufw >/dev/null 2>&1
+#  echo "==== Stop and Disable firewall =="
+#  systemctl disable --now ufw >/dev/null 2>&1
 
 # ===== configure OS modules
-  sudo modprobe overlay
-  sudo modprobe br_netfilter
-  sudo sysctl --system >/dev/null 2>&1
+#  sudo modprobe overlay
+#  sudo modprobe br_netfilter
+#  sudo sysctl --system >/dev/null 2>&1
 
 #===== enable ip forwarding
   echo 1 > /proc/sys/net/ipv4/ip_forward
@@ -31,17 +31,17 @@ EOF
 echo "==== Configured host === "
 }
 
-configure_user()
-{
+#configure_user()
+#{
 #  echo "=== configured vagrant user ===="
-}
+#}
 
 main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
   install_docker_supp_tools
   configure_host
-  configure_user
+#  configure_user
   echo "=== done with docker, docker-compose installation ==="
 }
 
