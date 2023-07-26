@@ -39,6 +39,7 @@ cat >>/etc/hosts<<EOF
 172.16.16.101   kworker1    kworker1
 172.16.16.101   kworker1    kworker1.local
 EOF
+sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
 
 #=== configure_firewall
   echo "==== Stop and Disable firewall =="

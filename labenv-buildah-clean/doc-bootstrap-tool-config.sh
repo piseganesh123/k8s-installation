@@ -16,8 +16,9 @@ configure_host()
 {
 # === configure_hosts_file
 cat >>/etc/hosts<<EOF
-172.16.16.100   master     kmaster.local
+172.16.16.100   vmaster     kmaster.local
 EOF
+sed -e '/^.*ubuntu2204.*/d' -i /etc/hosts
 
 #=== configure_firewall
 #  echo "==== Stop and Disable firewall =="
