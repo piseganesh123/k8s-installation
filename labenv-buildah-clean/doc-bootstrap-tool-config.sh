@@ -4,7 +4,10 @@
 install_buildah_supp_tools() {
   echo "=========== Supporting utility installation function =========="
   sudo apt-get update -y >/dev/null 2>&1
-  sudo apt-get install runc, buildah, podman -y
+  sudo apt-get -y install podman
+  sudo apt-get -y install buildah
+  sudo apt-get -y install runc
+
   #=== configure container runtime
   echo "=== updated supporting tools === "
 }
