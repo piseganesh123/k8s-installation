@@ -4,8 +4,7 @@
 install_docker_supp_tools() {
   echo "=========== Supporting utility installation function =========="
   sudo apt-get update -y >/dev/null 2>&1
-  
-  #=== configure container runtime
+    #=== configure container runtime
   echo "=== updated supporting tools === "
 }
 

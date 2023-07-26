@@ -4,7 +4,7 @@
 install_buildah_supp_tools() {
   echo "=========== Supporting utility installation function =========="
   sudo apt-get update -y >/dev/null 2>&1
-  sudo apt install runc, buildah, podman -y
+  sudo apt-get install runc, buildah, podman -y
   #=== configure container runtime
   echo "=== updated supporting tools === "
 }
@@ -42,7 +42,7 @@ main() {
   install_buildah_supp_tools
   configure_host
 #  configure_user
-  echo "=== done with docker, docker-compose installation ==="
+  echo "=== done with buildah, podman installation ==="
 }
 
 main "$@"
