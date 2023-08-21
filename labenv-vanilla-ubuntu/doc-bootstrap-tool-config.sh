@@ -1,7 +1,7 @@
 #! /bin/bash
 #set -e
 
-install_docker_supp_tools() {
+install_supp_tools() {
   echo "=========== Supporting utility installation function =========="
   sudo apt-get update -y >/dev/null 2>&1
     #=== configure container runtime
@@ -38,7 +38,7 @@ echo "==== Configured host === "
 main() {
   echo "=========== In main support tool install function =========="
   # == install supporting tools like docker
-  install_docker_supp_tools
+  install_supp_tools
   configure_host
 #  configure_user
   echo "=== done with docker, docker-compose installation ==="
