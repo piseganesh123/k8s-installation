@@ -37,11 +37,11 @@ echo "==== Configured host === "
 
 main() {
   echo "=========== In main support tool install function =========="
-  # == install supporting tools like docker
+  # == install supporting tools
   install_supp_tools
   configure_host
 #  configure_user
-  echo "=== done with docker, docker-compose installation ==="
+  echo "=== done with supporting tool installation ==="
 }
 
 main "$@"
