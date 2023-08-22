@@ -1,0 +1,49 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+
+VAGRANT_BOX         = "generic/ubuntu2010"
+
+CPUS_MASTER_NODE    = 2
+MEMORY_MASTER_NODE  = 4096
+IP_NW = "172.16.16."
+MASTER_IP_START = 1
+NODE_IP_START = 2
+
+# Install vagrant-disksize to allow resizing the vagrant box disk.
+unless Vagrant.has_plugin?("vagrant-disksize")
+  raise  Vagrant::Errors::VagrantError.new, "vagrant-disksize plugin is missing. Please install it using 'vagrant plugin install vagrant-disksize' and rerun 'vagrant up'"
+end
+
+Vagrant.configure(2) do |config|
+
+#  config.vm.provision "shell", path: "./doc-bootstrap-tool-config.sh"
+  
+  # To limit disksize
+  config.disksize.size = '25GB'
+
+  # Kubernetes Master Server
+  config.vm.define "vmaster" do |node|
+  
+    node.vm.box               = VAGRANT_BOX
+    node.vm.box_check_update  = false
+#    node.vm.box_version       = VAGRANT_BOX_VERSION
+    node.vm.hostname          = "vmaster"
+
+    node.vm.network "private_network", ip: "172.16.16.100"
+#    node.vm.network "public_network"
+  
+    node.vm.provider :virtualbox do |v|
+      v.name    = "vmaster"
+      v.memory  = MEMORY_MASTER_NODE
+      v.cpus    = CPUS_MASTER_NODE
+    end
+  
+    node.vm.provider :libvirt do |v|
+      v.memory  = MEMORY_MASTER_NODE
+      v.nested  = true
+      v.cpus    = CPUS_MASTER_NODE
+    end
+  end
+end
