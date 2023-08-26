@@ -3,8 +3,8 @@
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
 
-VAGRANT_BOX         = "generic/ubuntu2010"
-
+VAGRANT_BOX         = "generic/ubuntu2204"
+VAGRANT_BOX_VERSION = "4.0.2"
 CPUS_MASTER_NODE    = 2
 MEMORY_MASTER_NODE  = 4096
 IP_NW = "172.16.16."
