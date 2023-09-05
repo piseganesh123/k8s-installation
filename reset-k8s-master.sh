@@ -66,9 +66,10 @@ main() {
   configure_host
   deploy_k8s_cluster
   #== deploy flannel n/w
+  re_configure_user
   deploy_network
   enable_master_deploy
-  re_configure_user
+
 }
 
 main "$@"
