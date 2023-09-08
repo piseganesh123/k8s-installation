@@ -25,8 +25,8 @@ deploy_k8s_cluster() {
 
 deploy_network() {
   echo "=========== in deploy flannel n/w function =========="
-#  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
-#  export KUBECONFIG=/etc/kubernetes/admin.conf
+  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
+  export KUBECONFIG=/etc/kubernetes/admin.conf
   #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml 2>&1
   kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml 2>&1
