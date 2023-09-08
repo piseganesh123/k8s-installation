@@ -71,7 +71,9 @@ configure host server
 
 create cluster using kubeadm
 
-# reset kubernetes master
+# to reset kubernetes master, clone repository, move to k8s directory and run below command
+
+sh ./reset-k8s-master.sh
 
 #clone repository
 git clone https://github.com/piseganesh123/k8s-installation.git
