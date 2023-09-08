@@ -18,7 +18,7 @@ deploy_k8s_cluster() {
   #===wait while k8s comps are getting created
   #== to taint - run $kubectl taint nodes master-node key1=value1:NoSchedule
 
-  kubeadm token create --print-join-command | sudo tee  /joincluster.sh
+  kubeadm token create --print-join-command | sudo tee  /joincluster.sh 2>&1
   echo "==== deployed k8s cluster ===="
 }
 
@@ -27,8 +27,8 @@ deploy_network() {
 #  [[ -f /etc/kubernetes/admin.conf ]] && echo "==== config  file exists! ===="
 #  export KUBECONFIG=/etc/kubernetes/admin.conf
   #kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml
-  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml
+  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/tigera-operator.yaml 2>&1
+  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/custom-resources.yaml 2>&1
   echo "=== deployed calico network ===="
  }
 
