@@ -18,7 +18,8 @@ deploy_k8s_cluster() {
   #===wait while k8s comps are getting created
   #== to taint - run $kubectl taint nodes master-node key1=value1:NoSchedule
 
-  echo $(kubeadm token create --print-join-command) | sudo tee  /joincluster.sh
+#  echo $(kubeadm token create --print-join-command) | sudo tee  /joincluster.sh
+  sudo bash -c "echo $(kubeadm token create --print-join-command) > /joincluster.sh"
   echo "==== deployed k8s cluster ===="
 }
 
