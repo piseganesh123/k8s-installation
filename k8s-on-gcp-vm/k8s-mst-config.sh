@@ -40,7 +40,9 @@ deploy_k8s_cluster() {
 
   kubeadm config images pull >/dev/null 2>&1
   
-  sudo kubeadm init  --pod-network-cidr=${POD_NW_CIDR}
+#  TOBEDELETED - sudo kubeadm init --apiserver-advertise-address=172.16.16.100 --pod-network-cidr=192.168.0.0/16
+  sudo kubeadm init --apiserver-advertise-address=${ADV_ADDR} --pod-network-cidr=${POD_NW_CIDR} \
+  --control-plane-endpoint=${CP_ENDPOINT}
 
   #wait while k8s comps are getting created
   export KUBECONFIG=/etc/kubernetes/admin.conf
@@ -131,8 +133,8 @@ main() {
   #== deploy flannel n/w
   deploy_network
   enable_master_deploy
-#  enable_root_ssh_access
-#  configure_user
+  enable_root_ssh_access
+  configure_user
   # == deploy_busybox
   echo "=== done with master node configuration"
 }

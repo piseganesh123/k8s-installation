@@ -63,10 +63,12 @@ resource "google_compute_instance" "k8s_master_server" {
     enable-oslogin = "FALSE"
   }
 
+  metadata_startup_script = "sudo apt install git -y && git clone https://github.com/piseganesh123/k8s-installation.git && cd k8s-installation/k8s-on-gcp-vm && sudo sh ./k8s-bootstrap-tool-config.sh && sudo sh ./k8s-mst-config.sh"
+
   provisioner "remote-exec" {
     inline = [
       "echo 'SSH connection worked'",
-      "sudo apt install git -y && git clone https://github.com/piseganesh123/k8s-installation.git && cd k8s-installation/k8s-on-gcp-vm && sudo sh ./k8s-bootstrap-tool-config.sh && sudo sh ./k8s-mst-config.sh",
+//      "sudo apt install git -y && git clone https://github.com/piseganesh123/k8s-installation.git && cd k8s-installation/k8s-on-gcp-vm && sudo sh ./k8s-bootstrap-tool-config.sh && sudo sh ./k8s-mst-config.sh",
     ]
 
     connection {
