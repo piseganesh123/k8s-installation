@@ -31,7 +31,7 @@ resource "google_compute_firewall" "k8s_trn_fw_allowall" {
 # GCP Compute Instance for creating a single node RKE cluster and installing the Rancher server
 resource "google_compute_instance" "k8s_master_server" {
   depends_on = [
-    google_compute_firewall.rancher_fw_allowall,
+    google_compute_firewall.k8s_trn_fw_allowall,
   ]
 
   scheduling {
@@ -66,6 +66,7 @@ resource "google_compute_instance" "k8s_master_server" {
   provisioner "remote-exec" {
     inline = [
       "echo 'SSH connection worked'",
+      "sudo apt install git -y && git clone https://github.com/piseganesh123/k8s-installation.git && cd k8s-installation/k8s-on-gcp-vm && sudo sh ./k8s-bootstrap-tool-config.sh && sudo sh ./k8s-mst-config.sh",
     ]
 
     connection {

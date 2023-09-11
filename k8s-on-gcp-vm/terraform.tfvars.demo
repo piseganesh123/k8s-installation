@@ -13,7 +13,7 @@ gcp_region = "asia-south1"
 gcp_zone = "asia-south1-c"
 
 # Machine type used for all compute instances
-machine_type = "e2-standard-2"
+machine_type = "e2-medium"
 
 # Prefix added to names of all resources
 prefix = "trn"
