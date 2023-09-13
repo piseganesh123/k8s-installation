@@ -29,7 +29,7 @@ resource "google_compute_firewall" "docker_trn_fw_allowall" {
 }
 
 # GCP Compute Instance for creating a single node RKE cluster and installing the Rancher server
-resource "google_compute_instance" "k8s_master_server" {
+resource "google_compute_instance" "docker_master_server" {
   depends_on = [
     google_compute_firewall.docker_trn_fw_allowall,
   ]
