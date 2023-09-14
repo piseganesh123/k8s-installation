@@ -17,7 +17,7 @@ resource "local_file" "ssh_public_key_openssh" {
 }
 
 # Firewall Rule to allow all traffic
-resource "google_compute_firewall" "docker_trn_fw_allowall" {
+resource "google_compute_firewall" "trn_docker_fw_allowall" {
   name    = "${var.prefix}-docker-fw-allowall"
   network = "default"
 
@@ -31,7 +31,7 @@ resource "google_compute_firewall" "docker_trn_fw_allowall" {
 # GCP Compute Instance for creating a single node RKE cluster and installing the Rancher server
 resource "google_compute_instance" "docker_master_server" {
   depends_on = [
-    google_compute_firewall.docker_fw_allowall,
+    google_compute_firewall.trn_docker_fw_allowall,
   ]
 
   scheduling {
