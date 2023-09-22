@@ -18,7 +18,7 @@ resource "local_file" "ssh_public_key_openssh" {
 
 # Firewall Rule to allow all traffic
 resource "google_compute_firewall" "k8s_trn_fw_allowall" {
-  name    = "${var.prefix}-k8s-trn-fw-allowall"
+  name    = "${var.prefix}-k8s-fw-allowall"
   network = "default"
 
   allow {
@@ -40,7 +40,7 @@ resource "google_compute_instance" "k8s_master_server" {
     automatic_restart = "false"
   }
   
-  name         = "${var.prefix}-k8s-trn-mst-server"
+  name         = "${var.prefix}-k8s-mst-server"
   machine_type = var.machine_type
   zone         = var.gcp_zone
 
