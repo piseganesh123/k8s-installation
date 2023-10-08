@@ -35,7 +35,7 @@ resource "google_compute_instance" "linux_master_server_1" {
   ]
 
   scheduling {
-    preemptible = var.is_preemptible
+#    preemptible = var.is_preemptible
 #    provisioning_model = var.provisioningModel
     automatic_restart = var.auto_server_restart
   }
