@@ -35,6 +35,26 @@ variable "machine_type" {
   default     = "e2-medium" 
 }
 
+
+variable "is_preemptible" {
+  type        = string
+  description = "If premptible"
+  default     = "true" 
+}
+
+variable "provisioningModel" {
+  type        = string
+  description = "Model"
+  default     = "SPOT" 
+}
+
+variable "auto_server_restart" {
+  type        = string
+  description = "Server restart behavior"
+  default     = "false" 
+}
+
+
 # Local variables used to reduce repetition
 locals {
   node_username = "gcpuser"

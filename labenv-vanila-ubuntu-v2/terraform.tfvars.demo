@@ -17,3 +17,11 @@ machine_type = "e2-medium"
 
 # Prefix added to names of all resources
 prefix = "trn"
+
+# If GCP instance is SPOT
+is_preemptible = "true"
+
+provisioningModel = "SPOT"
+
+auto_server_restart = "false"
+
