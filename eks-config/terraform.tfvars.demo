@@ -1,0 +1,6 @@
+# AWS region used for all resources.
+aws_region = "ap-south-1"
+
+
+# Prefix added to names of all resources
+prefix = "trn"
