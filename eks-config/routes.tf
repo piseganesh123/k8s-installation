@@ -3,14 +3,14 @@ resource "aws_route_table" "private" {
 
   route = [
     {
-      cidr_block                 = "0.0.0.0/0"
+      cidr_block                 = "10.0.1.0/24"
       nat_gateway_id             = aws_nat_gateway.nat.id
       carrier_gateway_id         = ""
       destination_prefix_list_id = ""
       egress_only_gateway_id     = ""
       gateway_id                 = ""
       instance_id                = ""
-      ipv6_cidr_block            = ""
+      ipv6_cidr_block            = "::/0"
       local_gateway_id           = ""
       network_interface_id       = ""
       transit_gateway_id         = ""
@@ -30,14 +30,14 @@ resource "aws_route_table" "public" {
 
   route = [
     {
-      cidr_block                 = "0.0.0.0/0"
+      cidr_block                 = "10.0.190.0/24"
       gateway_id                 = aws_internet_gateway.igw.id
       nat_gateway_id             = ""
       carrier_gateway_id         = ""
       destination_prefix_list_id = ""
       egress_only_gateway_id     = ""
       instance_id                = ""
-      ipv6_cidr_block            = ""
+      ipv6_cidr_block            = "::/0"
       local_gateway_id           = ""
       network_interface_id       = ""
       transit_gateway_id         = ""
