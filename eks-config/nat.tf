@@ -1,6 +1,5 @@
 resource "aws_eip" "nat" {
-  vpc = true
-
+#  vpc = true
   tags = {
     Name = "nat"
   }

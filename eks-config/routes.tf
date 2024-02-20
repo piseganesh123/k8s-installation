@@ -16,6 +16,7 @@ resource "aws_route_table" "private" {
       transit_gateway_id         = ""
       vpc_endpoint_id            = ""
       vpc_peering_connection_id  = ""
+      core_network_arn           = ""
     },
   ]
 
@@ -42,6 +43,7 @@ resource "aws_route_table" "public" {
       transit_gateway_id         = ""
       vpc_endpoint_id            = ""
       vpc_peering_connection_id  = ""
+      core_network_arn           = ""
     },
   ]
 
