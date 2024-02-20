@@ -3,7 +3,7 @@ resource "aws_route_table" "private" {
 
   route = [
     {
-      cidr_block                 = "10.0.1.0/24"
+      cidr_block                 = aws_vpc.main.cidr_block
       nat_gateway_id             = aws_nat_gateway.nat.id
       carrier_gateway_id         = ""
       destination_prefix_list_id = ""
@@ -30,7 +30,7 @@ resource "aws_route_table" "public" {
 
   route = [
     {
-      cidr_block                 = "10.0.190.0/24"
+      cidr_block                 = aws_vpc.main.cidr_block
       gateway_id                 = aws_internet_gateway.igw.id
       nat_gateway_id             = ""
       carrier_gateway_id         = ""
