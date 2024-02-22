@@ -74,23 +74,23 @@ module "eks" {
       desired_size = 1
     }
 
-    two = {
-      name = "node-group-2"
+#    two = {
+#      name = "node-group-2"
 
-      instance_types = ["t3.small"]
+#      instance_types = ["t3.small"]
 
-      min_size     = 1
-      max_size     = 2
-      desired_size = 1
-    }
+#      min_size     = 1
+#      max_size     = 2
+#      desired_size = 1
+#    }
   }
 }
 
 
 # https://aws.amazon.com/blogs/containers/amazon-ebs-csi-driver-is-now-generally-available-in-amazon-eks-add-ons/
-#data "aws_iam_policy" "ebs_csi_policy" {
-#  arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-#}
+data "aws_iam_policy" "ebs_csi_policy" {
+  arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+}
 
 module "irsa-ebs-csi" {
   source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
