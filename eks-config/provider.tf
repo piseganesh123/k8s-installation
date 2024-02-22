@@ -1,21 +1,26 @@
-provider "aws" {
-#  region = "ap-south-1"
-  region = var.aws_region
-}
-
 terraform {
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 5.7.0"
     }
-    local = {
-      source  = "hashicorp/local"
-      version = "2.4.0"
+
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.5.1"
     }
+
     tls = {
       source  = "hashicorp/tls"
-      version = "4.0.4"
+      version = "~> 4.0.4"
+    }
+
+    cloudinit = {
+      source  = "hashicorp/cloudinit"
+      version = "~> 2.3.2"
     }
   }
+
+  required_version = "~> 1.3"
 }
