@@ -21,6 +21,11 @@ terraform {
       version = "~> 2.3.2"
     }
   }
+  backend "s3" {
+    bucket = "tf-state-store-4-eks-trn"
+    key    = "terraform.tfstate"
+    region = "ap-south-1"
+  }
 
   required_version = "~> 1.3"
 }
