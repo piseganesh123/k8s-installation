@@ -18,13 +18,15 @@ install_k8s_supp_tools() {
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
  
   # ===  install Kubernetes repo
-  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+  echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  #sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
 
   sudo apt-get update -y >/dev/null 2>&1
   
   #=== configure container runtime
-  sudo apt-get install -y containerd.io=1.6.9-1 >/dev/null 2>&1
+  sudo apt-get install -y containerd.io=1.6.28-1 >/dev/null 2>&1
 
   containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
   sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
@@ -36,7 +38,7 @@ install_k8s_supp_tools() {
 
 configure_k8s_supp_tools() {
   echo "=========== configure k8s tools =========="
-  sudo apt-get install -y kubeadm=1.26.0-00 kubelet=1.26.0-00 kubectl=1.26.0-00 >/dev/null 2>&1
+  sudo apt-get install -y kubeadm=1.28.7-1.1 kubelet=1.28.7-1.1 kubectl=1.28.7-1.1 >/dev/null 2>&1
   sudo apt-mark hold kubeadm kubelet kubectl
   echo "==== Configured tools ===="
 }
