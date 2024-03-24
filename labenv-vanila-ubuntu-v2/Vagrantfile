@@ -7,7 +7,7 @@ VAGRANT_BOX         = "generic/ubuntu2204"
 VAGRANT_BOX_VERSION = "4.0.2"
 CPUS_MASTER_NODE    = 2
 MEMORY_MASTER_NODE  = 4096
-IP_NW = "172.16.16."
+IP_NW = "172.16.17."
 MASTER_IP_START = 1
 NODE_IP_START = 2
 
@@ -31,7 +31,7 @@ Vagrant.configure(2) do |config|
 #    node.vm.box_version       = VAGRANT_BOX_VERSION
     node.vm.hostname          = "vmaster"
 
-    node.vm.network "private_network", ip: "172.16.16.100"
+    node.vm.network "private_network", ip: "172.16.17.100"
 #    node.vm.network "public_network"
   
     node.vm.provider :virtualbox do |v|
